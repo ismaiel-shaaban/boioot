@@ -1,0 +1,257 @@
+.ordersTab {
+  padding: 20px 0;
+}
+
+.apartmentCard {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  text-align: right !important;
+  cursor: pointer;
+  padding: 20px;
+}
+
+.userProfileSection {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.userAvatar {
+  position: relative;
+}
+
+.profileImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e9ecef;
+}
+
+.profileImagePlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.userInfo {
+  flex: 1;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.apartmentCard:hover {
+  background-color: #f0f9f0;
+  box-shadow: 0 4px 12px rgba(45, 124, 24, 0.1);
+  transform: translateY(-2px);
+}
+
+.apartmentContent {
+  padding: 0;
+}
+
+.apartmentTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.apartmentDescription {
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+.apartmentDetails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.detailItem {
+  text-align: right;
+  font-size: 14px;
+  color: #888888;
+  font-weight: 400;
+}
+
+.detailValue {
+  font-size: 14px;
+  color: #333333;
+  font-weight: bold;
+}
+
+.apartmentTag {
+  display: inline-block;
+  background-color: #f2fff2;
+  color: #2d7c18;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: lighter;
+  margin-bottom: 20px;
+  border: 0.1px solid #e3ffe4;
+}
+
+.paginationContainer {
+  margin-top: 40px;
+}
+
+.pagination .page-link {
+  color: #2d7c18;
+  border-color: #ddd;
+  padding: 8px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.pagination .page-link:hover {
+  background-color: #f8f9fa;
+  border-color: #2d7c18;
+  color: #2d7c18;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #2d7c18;
+  border-color: #2d7c18;
+  color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #aaa;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (max-width: 992px) {
+  .apartmentTitle {
+    font-size: 18px;
+  }
+
+  .apartmentDescription {
+    font-size: 14px;
+  }
+
+  .apartmentDetails {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .apartmentCard {
+    margin-bottom: 20px;
+  }
+
+  .apartmentTitle {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .apartmentDescription {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .apartmentTag {
+    font-size: 13px;
+    padding: 6px 14px;
+    margin-bottom: 15px;
+  }
+
+  .apartmentDetails {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .detailItem,
+  .detailValue {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .apartmentTitle {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  .apartmentDescription {
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .apartmentTag {
+    font-size: 12px;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+  }
+
+  .apartmentDetails {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    text-align: right;
+  }
+
+  .detailItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .detailItem:last-child {
+    border-bottom: none;
+  }
+
+  .detailItem,
+  .detailValue {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .apartmentCard {
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  .apartmentTitle {
+    font-size: 14px;
+  }
+
+  .apartmentDescription {
+    font-size: 11px;
+    margin-bottom: 15px;
+  }
+
+  .apartmentTag {
+    font-size: 11px;
+    padding: 4px 10px;
+    margin-bottom: 10px;
+  }
+}
+

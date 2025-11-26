@@ -1,0 +1,150 @@
+.licensesList {
+  margin-top: 20px;
+}
+
+.licenseItem {
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.licensePreview {
+  position: relative;
+  height: 250px;
+}
+
+.licensePreview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.previewLink {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pdfPreview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+.fileType {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  color: white;
+  padding: 5px 15px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pdf {
+  background-color: #ce4725;
+}
+
+.jpg {
+  background-color: #4485e9;
+}
+
+.cardActionsContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.btnDelete {
+  background-color: #fff;
+  color: #2d7c18;
+  border: 1px solid #2d7c18;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnDelete:hover {
+  background-color: #2d7c18;
+  color: #fff;
+}
+
+/* Cancellation Dialog */
+.cancellationDialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.dialogOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialogContent {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  z-index: 1001;
+  text-align: center;
+}
+
+.dialogTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.dialogMessage {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btnSuccess {
+  background-color: #2d7c18;
+  color: white;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnCancel {
+  background-color: #f2fff2;
+  color: #2d7c18;
+  border: 1px solid #dbeafa;
+  padding: 10px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnCancel:hover {
+  background-color: #e8f5e9;
+}
+

@@ -1,0 +1,499 @@
+/* Backdrop */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+}
+
+/* Modal Container */
+.modalMainContainer {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1060;
+}
+
+.modalContainer {
+  position: absolute;
+  top: 100%;
+  left: 9%;
+  transform: translate(0%, -5%);
+  z-index: 1060;
+  width: 100%;
+  max-width: 400px;
+  min-height: 550px;
+  pointer-events: auto;
+  display: block;
+}
+
+/* Modal Content */
+.modalContent {
+  background-color: #fff;
+  border: none;
+  border-radius: 0px 50px 50px 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  min-height: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px;
+}
+
+.modalTitle {
+  /* top: 15%;
+  position: fixed; */
+  font-size: 18px;
+  font-weight: bold;
+  color: #3d3d3d;
+  margin: 0;
+  text-align: center;
+}
+
+.modalTitle2 {
+  top: 4%;
+  position: fixed;
+  font-size: 18px;
+  font-weight: bold;
+  color: #3d3d3d;
+  margin: 0;
+  text-align: center;
+}
+
+/* Close Button */
+.btnClose {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+}
+
+/* Modal Body */
+.modalBody {
+  width: 100%;
+  /* flex: 0 !important; */
+  padding: 20px;
+}
+
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.stepContent :global(.form-floating) {
+  width: 100%;
+}
+
+.stepContent :global(.form-floating .form-control) {
+  width: 100%;
+}
+
+/* Forms */
+.instructionText {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+/* Floating Form */
+.form-floating {
+  margin-bottom: 8px;
+}
+
+.form-floating .form-control {
+  border-radius: 18px;
+  border: 1.5px solid #e0f2e9;
+  background: #fff;
+  color: #707070;
+  font-size: 15px;
+  box-shadow: none;
+}
+
+.form-floating label {
+  color: #777;
+  font-size: 0.95rem;
+  padding: 0.8rem 1rem;
+}
+
+/* Floating label behavior */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.form-floating .form-control:hover {
+  border-color: #e0f2e9;
+  box-shadow: 2px 2px 2px 0.2rem rgba(215, 216, 215, 0.15);
+}
+
+.form-floating .form-control:focus {
+  outline: none;
+  border-color: #e0f2e9;
+  box-shadow: 0 5px 15px rgba(108, 107, 107, 0.1);
+}
+
+/* Password Input */
+.passwordInputContainer {
+  position: relative;
+}
+
+.togglePassword {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #4caf50;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 5;
+  padding: 0;
+  width: auto;
+  height: auto;
+}
+
+.togglePassword:hover {
+  color: #388e3c;
+}
+
+/* Success Button */
+.btn-success {
+  background-color: #388e3c;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 12px 0;
+  margin-top: 10px;
+  color: #fff;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.btn-success:hover {
+  background-color: #246313;
+}
+
+.btn-success:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Verification Code */
+.verificationCodeContainer {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.verificationCodeInput {
+  text-align: center;
+  font-size: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  color: #333;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+}
+
+.verificationCodeInput:focus {
+  outline: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-color: #4caf50;
+}
+
+/* Account Types */
+.accountTypes {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 15px;
+}
+
+.accountTypePill {
+  border: none;
+  border-radius: 30px;
+  padding: 8px 0;
+  background: #f6fff6;
+  color: #4caf50;
+  font-weight: 500;
+  font-size: 1.1rem;
+  box-shadow: 0 1px 4px rgba(76, 175, 80, 0.08);
+  height: 45px;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.accountTypePill:hover {
+  background: #e8f5e9;
+}
+
+.accountTypePill.active {
+  background: #388e3c;
+  color: #fff;
+}
+
+/* Success Container */
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.successIcon {
+  font-size: 60px;
+  color: #2d7c18;
+  margin-bottom: 15px;
+}
+
+.successTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Password Requirements */
+.passwordRequirements {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #f8f9fa;
+}
+
+.passwordRequirements ul {
+  padding-right: 1rem;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.passwordRequirements li {
+  list-style-type: none;
+  position: relative;
+  padding-right: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.passwordRequirements li:before {
+  content: "•";
+  position: absolute;
+  right: 0;
+}
+
+.passwordStrengthMeter {
+  width: 100%;
+  height: 4px;
+  background-color: #e9ecef;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.strengthBar {
+  height: 100%;
+  background-color: #28a745;
+  transition: width 0.3s ease;
+}
+
+/* Register Link */
+.registerLink {
+  position: fixed;
+  width: 100%;
+  bottom: 7%;
+  right: 0;
+  text-align: center;
+}
+
+.registerLink a {
+  color: #388e3c !important;
+  cursor: pointer !important;
+  text-decoration: none;
+}
+
+.registerLink a:hover {
+  color: #246313 !important;
+  font-weight: bold;
+}
+
+.submitBtn {
+  margin-top: 10%;
+}
+
+/* Forgot Password */
+.forgotPassword {
+  margin-top: 10px;
+  color: rgb(44, 120, 174);
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+.forgotPassword a {
+  color: rgb(44, 120, 174);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.forgotPassword a:hover {
+  text-decoration: underline;
+}
+
+/* Phone Number Input Styling */
+.phoneNumberInputContainer {
+  width: 100%;
+  position: relative;
+}
+
+.phoneNumberInputContainer :global(.PhoneInput) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 18px;
+  border: 1.5px solid #e0f2e9;
+  background: #fff;
+  padding: 0.8rem 1rem;
+  font-size: 15px;
+  color: #707070;
+  transition: all 0.2s;
+}
+
+.phoneNumberInputContainer :global(.PhoneInput:hover) {
+  border-color: #e0f2e9;
+  box-shadow: 2px 2px 2px 0.2rem rgba(215, 216, 215, 0.15);
+}
+
+.phoneNumberInputContainer :global(.PhoneInput:focus-within) {
+  outline: none;
+  border-color: #e0f2e9;
+  box-shadow: 0 5px 15px rgba(108, 107, 107, 0.1);
+}
+
+.phoneNumberInputContainer :global(.PhoneInput.is-invalid) {
+  border-color: #dc3545;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputInput) {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 15px;
+  color: #707070;
+  padding: 0;
+  margin: 0;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputCountryIcon) {
+  width: 1.5em;
+  height: 1.5em;
+  margin-left: 0.5rem;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputCountrySelect) {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputCountrySelectArrow) {
+  opacity: 0.5;
+  margin-left: 0.25rem;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .modalContainer {
+    max-width: 90%;
+    left: 5%;
+  }
+
+  .verificationCodeInput {
+    width: 50px;
+    height: 50px;
+    font-size: 16px;
+  }
+
+  .modalTitle,
+  .modalTitle2 {
+    position: relative;
+    top: auto;
+  }
+
+  .registerLink {
+    position: relative;
+    bottom: auto;
+    margin-top: 20px;
+  }
+}
+
+/* Auth Dropdown */
+.authDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border-radius: 0px 20px 20px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  z-index: 1001;
+  overflow: hidden;
+  margin-top: 10px;
+  direction: rtl;
+}
+
+.dropdownItem {
+  padding: 12px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdownItem:hover {
+  background-color: #f5f9f5;
+}
+
+.dropdownItem i {
+  color: #2d7c18;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.dropdownItem span {
+  color: #333;
+  font-weight: 500;
+}
+
+@media (max-width: 576px) {
+  .authDropdown {
+    width: 180px;
+  }
+}

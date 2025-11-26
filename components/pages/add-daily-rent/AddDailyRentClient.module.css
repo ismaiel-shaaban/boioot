@@ -1,0 +1,326 @@
+.marketingRequestPage {
+  padding: 40px 0 60px 0;
+  background: linear-gradient(135deg, #f8fff9 0%, #eef3ff 100%);
+  min-height: 100vh;
+  direction: rtl;
+}
+
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loadingSpinner {
+  text-align: center;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.loadingSpinner p {
+  margin-top: 15px;
+  color: #666;
+  font-size: 16px;
+}
+
+.contentContainer {
+  padding: 0% 8%;
+}
+
+.pageHeader {
+  margin-top: 5%;
+  margin-bottom: 30px;
+  text-align: right;
+}
+
+.pageTitle {
+  margin-right: 2%;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.editModeIndicator {
+  margin-top: 10px;
+}
+
+.contentArea {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.08);
+}
+
+.stepNavigation {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.stepNavigation button {
+  border-radius: 40px;
+  padding: 12px 32px;
+  font-weight: 600;
+  border: none;
+  min-width: 180px;
+  box-shadow: 0 12px 25px rgba(16, 185, 129, 0.25);
+}
+
+.saveBtn {
+  padding: 12px 30px;
+  margin-right: 10px;
+  border-radius: 40px;
+  font-weight: 600;
+}
+
+.stepContent {
+  padding: 20px 0;
+}
+
+.licenseUploadArea {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.uploadPlaceholder {
+  position: relative;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.previousLicense {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.previousLicense:hover {
+  background-color: #e9ecef;
+}
+
+.licenseAdded {
+  padding: 10px;
+  background-color: #d4edda;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.removeLicenseBtn {
+  border: none;
+  background: transparent;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadBtn {
+  display: inline-block;
+  padding: 12px 35px;
+  background-color: #2d7c18;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.uploadBtn:hover {
+  background-color: #256314;
+}
+
+.invalidFeedback {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.errorMessage {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 1051;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.modalBody {
+  padding: 20px;
+}
+
+.licenseItem {
+  position: relative;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.licenseCheckboxContainer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+.licenseCheckbox {
+  display: none;
+}
+
+.licenseCheckboxLabel {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.licenseCheckbox:checked + .licenseCheckboxLabel {
+  background-color: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.licensePreview {
+  position: relative;
+  margin-top: 10px;
+}
+
+.previewLink {
+  display: block;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.pdfPreview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.fileType {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+}
+
+.fileType.pdf {
+  background-color: #dc3545;
+}
+
+.fileType.jpg {
+  background-color: #28a745;
+}
+
+.fileType.png {
+  background-color: #007bff;
+}
+
+.selectedIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(40, 167, 69, 0.9);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .contentArea {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .stepNavigation {
+    flex-direction: column;
+  }
+
+  .stepNavigation button {
+    width: 100%;
+  }
+}
+

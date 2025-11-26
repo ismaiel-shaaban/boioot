@@ -1,0 +1,146 @@
+.container {
+  direction: rtl;
+}
+
+.commentsList {
+  margin-bottom: 20px;
+}
+
+.blogItem {
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.blogHeader {
+  margin-bottom: 10px;
+}
+
+.blogTime {
+  font-size: 12px;
+  color: #686868;
+}
+
+.blogUserInfo {
+  gap: 10px;
+}
+
+.blogUsername {
+  font-weight: 600;
+  color: #4CAF50;
+}
+
+.blogAvatar img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3.5px solid #44af47 !important;
+}
+
+.blogContent {
+  margin-bottom: 15px;
+  color: #686868;
+}
+
+.blogFooter {
+  padding-top: 10px;
+}
+
+.blogStats {
+  gap: 15px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.statItem.likes::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background-image: url('/assets/icons/like.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.statItem.likes.hovered {
+  transform: scale(1.1);
+}
+
+.reactionsIcons {
+  color: #d4f4cb;
+}
+
+.statValue {
+  font-weight: 600;
+  color: #333;
+}
+
+.faThumbsUp:hover {
+  color: #2d7c18;
+  cursor: pointer;
+}
+
+.isLiked {
+  color: #2d7c18;
+}
+
+.addCommentSection {
+  direction: rtl;
+}
+
+.addCommentTitle {
+  color: #333;
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.form-floating {
+  margin-bottom: 8px;
+}
+
+.form-floating :global(.form-control) {
+  border-radius: 5px;
+  border: 1.5px solid #e0f2e9;
+  background: #fff;
+  color: #707070;
+  font-size: 15px;
+  box-shadow: none;
+  height: 100px;
+}
+
+.form-floating :global(label) {
+  color: #777;
+  font-size: 0.95rem;
+  padding: 0.8rem 1rem;
+}
+
+.form-floating :global(.form-control:focus ~ label),
+.form-floating :global(.form-control:not(:placeholder-shown) ~ label) {
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+.form-floating :global(.form-control:hover) {
+  border-color: none;
+  box-shadow: 2px 2px 2px 0.2rem rgb(215 216 215 / 15%);
+}
+
+.submitCommentBtn {
+  border-radius: 5px;
+  padding: 10px 30px;
+}
+

@@ -1,0 +1,223 @@
+.communitiesMain {
+  padding: 20px 0;
+  background-color: #ebebeb;
+  min-height: 100vh;
+  direction: rtl;
+  font-family: Cairo, sans-serif;
+}
+
+
+
+.postAuthor {
+  color: green;
+  font-weight: bold;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  text-decoration: none;
+}
+
+.postAuthor:hover {
+  color: #4CAF50;
+  text-decoration: underline;
+}
+
+.communitiesFilter {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  color: #4CAF50;
+  font-weight: 800;
+}
+
+.filterItem {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterItem.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.communityCard {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* margin: 5%; */
+}
+
+.communityHeader {
+  padding: 20px;
+  text-align: center;
+}
+
+.communityIcon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e8f5e9;
+  padding: 2%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.communityIcon img {
+  max-width: 70%;
+  max-height: 70%;
+}
+
+.communityTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.communityTitle a {
+  color: #333;
+  text-decoration: none;
+}
+
+.communityTitle a:hover {
+  color: #4CAF50;
+}
+
+.communityStats {
+  font-size: 12px;
+  color: #666;
+}
+
+.communityLatest {
+  padding: 15px 20px;
+  flex-grow: 1;
+}
+
+.latestTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 15px;
+  color: #333;
+}
+
+.latestPost {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.postMeta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.postTime {
+  font-size: 12px;
+  color: #626262;
+}
+
+.postTitle {
+  margin-bottom: 10px;
+}
+
+.postTitle a {
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.4;
+  display: block;
+}
+
+.postTitle a:hover {
+  color: #4CAF50;
+}
+
+.postStats {
+  font-size: 12px;
+  color: #626262;
+}
+
+.postAction {
+  position: absolute;
+  left: 0;
+  top: 80%;
+  transform: translateY(-50%);
+  color: #4CAF50 !important;
+  background-color: #f2fff2;
+  padding: 4% 4%;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.backIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.communityFooter {
+  padding: 10px 20px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: center;
+}
+
+.viewAllLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  transition: background-color 0.2s ease;
+}
+
+.viewAllLink:hover {
+  background-color: #e8f5e9;
+}
+
+.viewAllIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.subjectAction {
+  position: absolute;
+  left: 0;
+  top: 81%;
+  transform: translateY(-50%);
+  color: #4CAF50 !important;
+  background-color: #f2fff2;
+  padding: 3% 5%;
+  border-radius: 50%;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .welcomeTitle {
+    font-size: 16px;
+  }
+
+  .communityCard {
+    margin-bottom: 20px;
+  }
+}
+

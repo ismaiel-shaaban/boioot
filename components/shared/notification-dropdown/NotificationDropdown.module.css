@@ -1,0 +1,363 @@
+/* Desktop Notification Dropdown */
+.notificationDropdown {
+  position: absolute;
+  top: 100%;
+  right: -200px;
+  width: 400px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  border: 1px solid #e0e0e0;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+  max-height: 500px;
+  overflow: hidden;
+}
+
+.notificationHeader {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notificationHeader2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.viewAllBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2d7c18;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.viewAllBtn:hover {
+  background-color: #e8f5e8;
+  color: #245a13;
+}
+
+.notificationTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background-color: #e9ecef;
+  color: #333;
+}
+
+.notificationContent {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.notificationList {
+  padding: 0;
+}
+
+.notificationItem {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.notificationItem:hover {
+  background-color: #e1f0e2;
+}
+
+.notificationItem.new:hover {
+  background-color: #e1f0e2;
+}
+
+.notificationIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d6f3cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12px;
+  flex-shrink: 0;
+}
+
+.notificationIcon i {
+  color: #2d7c18;
+  font-size: 16px;
+}
+
+.notificationDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.notificationText {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.4;
+}
+
+.notificationDate {
+  font-size: 12px;
+  color: #666;
+  font-weight: 400;
+}
+
+.notificationIndicator {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.newIndicator {
+  width: 8px;
+  height: 8px;
+  background-color: #2d7c18;
+  border-radius: 50%;
+  display: block;
+}
+
+.notificationBadge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.badgeAd {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.badgeSpecialOrder {
+  background-color: #fff3e0;
+  color: #f57c00;
+}
+
+.badgeDailyRent {
+  background-color: #e8f5e9;
+  color: #2d7c18;
+}
+
+.badgeGeneral {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.loadingState {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #2d7c18;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mobile Notification Modal */
+.mobileNotificationModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+}
+
+.mobileModalContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 20px 20px 0 0;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileModalHeader {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mobileModalHeader h5 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.mobileHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobileViewAllBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2d7c18;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+.mobileCloseBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 18px;
+  padding: 4px;
+}
+
+.mobileModalBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.mobileNotificationList {
+  padding: 0;
+}
+
+.mobileNotificationItem {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobileNotificationItem:hover {
+  background-color: #f8f9fa;
+}
+
+.mobileNotificationContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobileNotificationIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d6f3cf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mobileNotificationIcon i {
+  color: #2d7c18;
+  font-size: 16px;
+}
+
+.mobileNotificationDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobileNotificationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.mobileNotificationText {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+.mobileNotificationDate {
+  font-size: 12px;
+  color: #666;
+}
+
+.mobileNotificationIndicator {
+  flex-shrink: 0;
+}
+
+.mobileNewIndicator {
+  width: 8px;
+  height: 8px;
+  background-color: #2d7c18;
+  border-radius: 50%;
+  display: block;
+}
+
+.mobileBadge {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+@media (max-width: 767px) {
+  .notificationDropdown {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobileNotificationModal {
+    display: none !important;
+  }
+}
+

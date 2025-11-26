@@ -1,0 +1,730 @@
+/* Base Styles */
+.topNavContainer {
+  background-color: #ffffff;
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+}
+
+.topNav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* Logo Styles */
+.logo a {
+  display: inline-block;
+}
+
+.logoImg {
+  width: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+/* Desktop Actions */
+.desktopActions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: opacity 0.3s ease;
+}
+
+/* Hide desktop actions when mobile menu is active */
+.mobileNav.active ~ .topNavContainer .desktopActions,
+.mobileNav.active + .topNavContainer .desktopActions {
+  display: none !important;
+}
+
+/* Nav links and icons */
+.navLinks,
+.navIcons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Button Styles */
+.btn {
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnPrimary {
+  background-color: #106ab8;
+  color: white;
+}
+
+.btnPrimary:hover {
+  background-color: #0d5aa0;
+}
+
+.btnSuccess {
+  background-color: #2d7c18;
+  color: white;
+}
+
+.btnSuccess:hover {
+  background-color: #245a13;
+}
+
+.btnIcon {
+  color: #ffffff;
+}
+
+.btnIconMap {
+  color: #2d7c18;
+}
+
+/* Icon Buttons */
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.userAvatar:hover {
+  transform: scale(1.05);
+}
+
+.locationBtn,
+.notificationBtn,
+.profileBtn,
+.favoriteBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.locationBtn {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.locationBtn:hover {
+  background-color: #e0e0e0;
+}
+
+.profileBtn {
+  background-color: #2d7c18;
+}
+
+.profileBtn:hover {
+  background-color: #245a13;
+}
+
+.notificationBtn {
+  background-color: #e8f5e8;
+  color: #2d7c18;
+}
+
+.notificationBtn:hover {
+  background-color: #d4f4cb;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff5722;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.favoritesBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff5722;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.favoriteBtn {
+  background-color: #ff5722;
+  color: white;
+}
+
+.favoriteBtn:hover {
+  background-color: #e64a19;
+}
+
+/* Notification Container */
+.notificationContainer {
+  position: relative;
+  display: inline-block;
+}
+
+/* Mobile Menu Toggle */
+.mobileMenuToggle {
+  display: none;
+}
+
+.burgerBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+}
+
+.burgerLine {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.burgerBtn.active .burgerLine:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burgerBtn.active .burgerLine:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerBtn.active .burgerLine:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Navigation */
+.mobileNav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Show mobile nav when active */
+.mobileNav.active {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobileNavContent {
+  padding: 20px;
+}
+
+.mobileNavLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* Nested Profile Menu Inside Mobile Nav */
+.mobileProfileParent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobileProfileParent > button {
+  background-color: #2d7c18;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  direction: rtl;
+  transition: background-color 0.3s ease;
+}
+
+.mobileProfileParent > button:hover {
+  background-color: #245a13;
+}
+
+.mobileProfileChildren {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+  padding-left: 12px;
+  direction: rtl;
+}
+
+.mobileProfileParent.open .mobileProfileChildren {
+  display: flex;
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+  direction: rtl;
+}
+
+.mobileNavLink:hover {
+  background-color: #e9ecef;
+  color: #2d7c18;
+}
+
+.mobileNavLink i {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Mobile Dropdown Menu (for nested dropdowns in mobile nav) */
+.mobileDropdownMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  direction: rtl;
+}
+
+/* Mobile Login Button */
+.mobileLoginBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #2d7c18;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  direction: rtl;
+}
+
+.mobileLoginBtn:hover {
+  background-color: #245a13;
+}
+
+.mobileLoginBtn i {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Mobile Action Icons */
+.mobileActionIcons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobileIconBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+  direction: rtl;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mobileIconBtn:hover {
+  background-color: #e9ecef;
+}
+
+.mobileIconBtn i {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+.mobileIconBtn span {
+  flex: 1;
+  font-weight: 500;
+  color: #333;
+}
+
+.mobileIconBtn.notificationBtn {
+  color: #2d7c18;
+}
+
+.mobileIconBtn.favoriteBtn {
+  color: #ff5722;
+}
+
+.mobileIconBtn.locationBtn {
+  color: #666;
+}
+
+/* Mobile User Section */
+.mobileUserSection {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.mobileUserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobileUserProfile {
+  cursor: pointer;
+}
+
+.mobileUserAvatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+}
+
+/* Mobile Auth Dropdown */
+.mobileAuthDropdown {
+  margin-top: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Overlay */
+.mobileOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* dark translucent black */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.mobileOverlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .navLinks,
+  .navIcons {
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+
+  .desktopActions {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 986px) {
+  .desktopActions {
+    display: none; /* Hide desktop actions on small screens anyway */
+  }
+
+  .mobileMenuToggle {
+    display: block;
+  }
+
+  .logoImg {
+    width: 80px;
+  }
+
+  .topNavContainer {
+    padding: 12px 0;
+  }
+}
+
+@media (min-width: 986px) {
+  .mobileNav,
+  .mobileOverlay {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .logoImg {
+    width: 70px;
+  }
+
+  .mobileNavContent {
+    padding: 15px;
+  }
+
+  .mobileNavLinks {
+    gap: 10px;
+  }
+
+  .mobileNavLink,
+  .mobileProfileParent > button,
+  .mobileLoginBtn,
+  .mobileIconBtn {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 986px) {
+  .mobileNav,
+  .mobileOverlay {
+    display: none;
+  }
+}
+
+/* Dropdown Wrapper - positions dropdown above navbar */
+.dropdownWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 80px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.customDropdown {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+  padding: 24px 0;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  z-index: 1060;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.customCard {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  padding: 18px 24px;
+  margin: 0 18px;
+  box-shadow: none;
+  border: none;
+  transition: background 0.2s;
+}
+
+.greenCard {
+  background: #f1fdf4;
+}
+
+.blueCard {
+  background: #f1f7fd;
+}
+
+.iconCircle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 18px;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.iconCircle.green {
+  background: #d6f5df;
+  color: #2e9b4d;
+}
+
+.iconCircle.blue {
+  background: #d6e8fa;
+  color: #2a7de1;
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.itemTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.greenTitle {
+  color: #2e9b4d;
+}
+
+.blueTitle {
+  color: #2a7de1;
+}
+
+.itemSubtext {
+  color: #666;
+  font-size: 1rem;
+}
+
+.dropdownItem {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.userDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  border: 2px solid #e0e0e0;
+}
+
+.userAvatar:hover {
+  transform: scale(1.05);
+  border-color: #2d7c18;
+}
+
+/* Mobile Auth Dropdown */
+.mobileAuthDropdown {
+  margin-top: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.mobileUserSection {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+.mobileUserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobileUserProfile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.mobileUserAvatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+}

@@ -1,0 +1,185 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.modalDialog {
+  max-width: 90%;
+  margin: 1.75rem auto;
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .modalDialog {
+    max-width: 500px;
+  }
+}
+
+.modalContent {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background: white;
+  overflow: hidden;
+}
+
+.modalHeader {
+  border-bottom: 1px solid #eee;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.closeBtn:hover {
+  background: #e9ecef;
+  color: #333;
+}
+
+.modalBody {
+  padding: 1.5rem;
+}
+
+.shareOptions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 375px) {
+  .shareOptions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shareBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.shareBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.shareBtn i {
+  font-size: 1.1rem;
+}
+
+.facebook {
+  background-color: #1877f2;
+  box-shadow: 0 2px 5px rgba(24, 119, 242, 0.3);
+}
+
+.x {
+  background-color: #000000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp {
+  background-color: #25d366;
+  box-shadow: 0 2px 5px rgba(37, 211, 102, 0.3);
+}
+
+.telegram {
+  background-color: #0088cc;
+  box-shadow: 0 2px 5px rgba(0, 136, 204, 0.3);
+}
+
+.copyLink {
+  margin-top: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: stretch;
+}
+
+.input {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  background-color: #f8f9fa;
+  direction: ltr;
+  text-align: left;
+}
+
+.copyBtn {
+  border: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  padding: 0.75rem 1rem;
+  background-color: #f8f9fa;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.copyBtn:hover {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+@media (max-width: 576px) {
+  .modalBody {
+    padding: 1rem;
+  }
+
+  .shareBtn {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .input,
+  .copyBtn {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+}
+

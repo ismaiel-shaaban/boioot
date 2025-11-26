@@ -1,0 +1,178 @@
+.footer {
+  background-color: #00274e;
+  padding: 20px 0;
+  color: #fff;
+  direction: rtl;
+}
+
+.footerContent {
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.footerColumn {
+  margin-bottom: 30px;
+}
+
+.footerTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #28a745;
+}
+
+.footerLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerLinks li {
+  margin-bottom: 15px;
+}
+
+.footerLinks a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 15px;
+  display: block;
+  transition: color 0.3s ease;
+}
+
+.footerLinks a:hover {
+  color: #28a745;
+}
+
+.socialMediaContainer {
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+}
+
+.logoContainer {
+  margin-bottom: 15px;
+}
+
+.footerLogo {
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+.footerDescription {
+  color: #ecf0f1;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.socialMedia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.columnSocial {
+  flex: 1 1 calc(25% - 16px); /* 4 columns per row */
+  box-sizing: border-box;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #34495e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.socialIcon:hover {
+  transform: scale(1.1) rotate(360deg);
+  opacity: 0.8;
+}
+
+.socialIcon i {
+  font-size: 16px;
+}
+
+.footerHr {
+  border: 3px solid;
+  margin: 0px auto;
+  width: 93%;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.copyright {
+  color: white;
+  text-align: center;
+  padding-top: 15px;
+  font-size: 14px;
+}
+
+.copyright p {
+  margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .socialMediaContainer {
+    position: relative;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .socialMedia {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding-top: 30px;
+  }
+
+  .footerTitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .footerLinks a {
+    font-size: 14px;
+  }
+
+  .footerLinks li {
+    margin-bottom: 12px;
+  }
+
+  .socialIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .socialIcon i {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .footerColumn {
+    margin-bottom: 25px;
+  }
+
+  .footerTitle {
+    font-size: 15px;
+    margin-bottom: 15px;
+  }
+
+  .footerLinks a {
+    font-size: 13px;
+  }
+
+  .copyright {
+    padding: 12px 0;
+    font-size: 12px;
+  }
+}

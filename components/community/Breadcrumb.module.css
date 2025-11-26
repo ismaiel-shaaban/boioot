@@ -1,0 +1,38 @@
+.container {
+  padding: 15px 0;
+  direction: rtl;
+}
+
+.mainCategory .categoryLink {
+  color: #307b33;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+}
+
+.lightGreen {
+  color: #369d57c8;
+}
+
+.subCategoryLink {
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.postTitleText {
+  color: #666;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-wrap: wrap;
+  }
+}
+

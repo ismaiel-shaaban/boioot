@@ -1,0 +1,374 @@
+/* Container - matches Angular's community-blog-container */
+.communityBlogContainer {
+  background: #fff;
+  min-height: 100vh;
+  direction: rtl;
+  font-family: Cairo, sans-serif;
+  padding: 30px 0;
+}
+
+.blogItems {
+  font-family: Cairo, sans-serif;
+}
+
+/* :global(.community-page) {
+  background: #fff;
+  min-height: 100vh;
+  direction: rtl;
+  font-family: Cairo, sans-serif;
+  padding: 30px 0;
+} */
+
+/* Post Card */
+.postCard {
+  background: white;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.postCard:hover {
+  background: #d4e8d4;
+  box-shadow: 0 4px 16px rgba(76, 175, 80, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Post Content */
+.postContent {
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 220px;
+  overflow: hidden;
+}
+
+.postImage {
+  margin-top: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 200px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.contentImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.postTitle {
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Cairo, sans-serif;
+}
+
+.postTitle a {
+  color: #333;
+  text-decoration: none;
+}
+
+.postTitle a:hover {
+  color: #4CAF50;
+}
+
+.postTextContainer {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  max-height: 120px;
+  font-family: Cairo, sans-serif;
+}
+
+.postTextContainer :global(*) {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.postTextContainer :global(img) {
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 100px !important;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+.postTextContainer :global(h1),
+.postTextContainer :global(h2),
+.postTextContainer :global(h3),
+.postTextContainer :global(h4),
+.postTextContainer :global(h5),
+.postTextContainer :global(h6) {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  margin: 6px 0 4px 0 !important;
+  line-height: 1.3 !important;
+  color: #333 !important;
+}
+
+.postTextContainer :global(p) {
+  margin: 4px 0 !important;
+  line-height: 1.4 !important;
+  font-size: 14px !important;
+}
+
+.postTextContainer.shortContent::after {
+  display: none;
+}
+
+.postTextContainer:not(.shortContent)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(transparent, white);
+  pointer-events: none;
+}
+
+.readMoreIndicator {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.readMoreText {
+  color: #4CAF50;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.readMoreText:hover {
+  background-color: #f5f5f5;
+  text-decoration: none;
+  color: #45a049;
+}
+
+/* Post Header */
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userAvatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  color: #4caf50;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  font-family: Cairo, sans-serif;
+}
+
+.postTimestamp {
+  color: #666;
+  font-size: 13px;
+  font-family: Cairo, sans-serif;
+}
+
+/* Post Actions */
+.postActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 15px;
+}
+
+.shareBtn {
+  background: none;
+  border: none;
+  color: #4caf50;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  font-family: Cairo, sans-serif;
+}
+
+.shareBtn:hover {
+  background: #f8fff8;
+  color: #38843c;
+}
+
+.postStats {
+  display: flex;
+  gap: 20px;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.statItem.liked {
+  color: #14a745;
+}
+
+.statNumber {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  font-family: Cairo, sans-serif;
+}
+
+.statItem i {
+  font-size: 14px;
+  color: #666;
+  font-family: Cairo, sans-serif;
+}
+
+.statItem.liked i {
+  color: #14a745;
+}
+
+.statItem.liked:hover .statNumber,
+.statItem.liked:hover i {
+  color: #14a745;
+}
+
+.statItem.likes:hover i {
+  color: #38843c !important;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .postCard {
+    padding: 20px;
+  }
+
+  .postHeader {
+    margin-bottom: 15px;
+  }
+
+  .userAvatar,
+  .userAvatar img {
+    width: 45px;
+    height: 45px;
+  }
+
+  .userName {
+    font-size: 15px;
+  }
+
+  .postTitle {
+    font-size: 16px;
+  }
+
+  .postActions {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .postStats {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .postCard {
+    padding: 15px;
+  }
+
+  .userInfo {
+    gap: 10px;
+  }
+
+  .userAvatar,
+  .userAvatar img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .userName {
+    font-size: 14px;
+  }
+
+  .postTitle {
+    font-size: 15px;
+  }
+
+  .postActions {
+    padding-top: 12px;
+  }
+
+  .shareBtn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .statNumber,
+  .statItem i {
+    font-size: 13px;
+  }
+}

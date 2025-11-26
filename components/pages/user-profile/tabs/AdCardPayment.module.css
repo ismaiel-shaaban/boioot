@@ -1,0 +1,53 @@
+.addCardTab {
+  direction: rtl;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  margin-right: 1%;
+  text-align: right;
+}
+
+.formActions {
+  margin-top: 30px;
+  text-align: center;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.btnSave {
+  background-color: #2d7c18;
+  color: white;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnSave:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btnCancel {
+  background-color: #f2fff2;
+  color: #2d7c18;
+  border: 1px solid #dbeafa;
+  padding: 10px 40px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btnCancel:hover {
+  background-color: #e8f5e9;
+}
+
+.input-group-text {
+  height: 58px;
+  color: #55b939;
+}
+

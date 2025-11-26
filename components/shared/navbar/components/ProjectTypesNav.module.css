@@ -1,0 +1,104 @@
+.projectTypesContainer {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 10px 0;
+  position: relative;
+  direction: rtl;
+}
+
+.projectTypesNav {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.scrollBtn {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: #2d7c18;
+}
+
+
+.scrollBtn.visible {
+  opacity: 1;
+}
+
+.scrollBtn.scrollLeft {
+  left: 0;
+}
+
+.scrollBtn.scrollRight {
+  right: 0;
+}
+
+.scrollContainer {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex: 1;
+  padding: 0 30px;
+  display: flex;
+  gap: 3.5%;
+  scroll-behavior: smooth;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.typeBtn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 50px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-weight: 500;
+  margin: 0 5px;
+}
+
+.typeBtn:hover {
+  background-color: #f0f0f0;
+}
+
+.typeBtn.active {
+  background-color: #2d7c18;
+  color: white;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .typeBtn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .projectTypesNav {
+    padding: 5px 0;
+  }
+  
+  .typeBtn {
+    margin: 0 3px;
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+}
+

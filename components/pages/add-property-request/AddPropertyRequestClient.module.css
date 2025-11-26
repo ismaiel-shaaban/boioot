@@ -1,0 +1,405 @@
+.marketingRequestPage {
+  min-height: 100vh;
+  padding: 32px 0 80px;
+  background: #f9f9f9;
+  direction: rtl;
+}
+
+.contentContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.pageHeader {
+  text-align: right;
+  margin-bottom: 24px;
+}
+
+.pageSubtitle {
+  color: #8d8d8d;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d2d2d;
+  margin: 0 0 8px;
+}
+
+.pageDescription {
+  color: #6c6c6c;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.contentArea {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(15, 36, 71, 0.08);
+}
+
+.inlineAlert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #fff5f5;
+  border: 1px solid #ffd7d7;
+  color: #c0392b;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+
+.requestError {
+  margin-bottom: 20px;
+}
+
+.alertRetry {
+  background: none;
+  border: none;
+  color: #2d7c18;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sectionHeader {
+  margin-bottom: 26px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #4a4a4a;
+}
+
+.sectionHint {
+  margin: 6px 0 0;
+  color: #939393;
+  font-size: 0.9rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.formCol {
+  flex: 1;
+  min-width: 240px;
+}
+
+.formFloating {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.formControl {
+  width: 100%;
+  border: 1.5px solid #e0f2e9;
+  border-radius: 12px;
+  background: #fff;
+  padding: 30px 14px 10px;
+  font-size: 15px;
+  color: #333;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+}
+
+.formControl:focus {
+  border-color: #2d7c18;
+  box-shadow: 0 0 0 3px rgba(45, 124, 24, 0.12);
+  outline: none;
+}
+
+.formControl[data-has-value='true'] + label,
+.formControl:focus + label {
+  top: 8px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.formFloating label {
+  position: absolute;
+  right: 14px;
+  top: 30%;
+  transform: translateY(-50%);
+  transition: 0.2s ease;
+  color: #777;
+  pointer-events: none;
+  background: transparent;
+}
+
+.textareaControl {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.invalid {
+  border-color: #ff6b6b;
+}
+
+.valid {
+  border-color: #2d7c18;
+}
+
+.invalidFeedback {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  min-height: 18px;
+  margin-bottom: 8px;
+}
+
+.locationSection {
+  margin-top: 32px;
+}
+
+.locationTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #4a4a4a;
+  margin-bottom: 16px;
+}
+
+.inputWithAdd {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.addButton {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  border: 2px solid #2d7c18;
+  background: #f2fff2;
+  color: #2d7c18;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.addButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.addButton:not(:disabled):hover {
+  background: #2d7c18;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(45, 124, 24, 0.3);
+}
+
+.addButtonTooltip {
+  position: absolute;
+  bottom: -32px;
+  right: 50%;
+  transform: translateX(50%);
+  background: #333;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.addButton:hover .addButtonTooltip {
+  opacity: 1;
+}
+
+.stepNavigation {
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.saveBtn {
+  min-width: 220px;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2d7c18, #54c026);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 20px 40px rgba(45, 124, 24, 0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #e6f4eb;
+  border-top-color: #2d7c18;
+  animation: spin 0.9s linear infinite;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.modalBody {
+  padding: 24px;
+}
+
+.formLabel {
+  display: block;
+  font-weight: 600;
+  color: #4f4f4f;
+  margin-bottom: 6px;
+}
+
+.required {
+  color: #e74c3c;
+  margin-right: 4px;
+}
+
+.modalInput {
+  width: 100%;
+  border: 1.5px solid #e0f2e9;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 15px;
+}
+
+.modalInput:focus {
+  border-color: #2d7c18;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45, 124, 24, 0.12);
+}
+
+.modalFooter {
+  padding: 0 24px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.secondaryBtn,
+.primaryBtn {
+  border-radius: 12px;
+  padding: 10px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.secondaryBtn {
+  background: #f4f4f4;
+  color: #555;
+}
+
+.primaryBtn {
+  background: linear-gradient(90deg, #2d7c18, #54c026);
+  color: #fff;
+}
+
+.primaryBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .contentArea {
+    padding: 20px;
+  }
+
+  .formRow {
+    flex-direction: column;
+  }
+
+  .addButtonTooltip {
+    display: none;
+  }
+}
+

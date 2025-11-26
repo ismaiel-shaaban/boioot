@@ -1,0 +1,163 @@
+.dynamicPageContainer {
+  min-height: 70vh;
+  background: #f8f9fa;
+}
+
+.loadingContainer {
+  text-align: center;
+  padding: 5rem 0;
+  background: white;
+}
+
+.loadingText {
+  margin-top: 1rem;
+  color: #6c757d;
+}
+
+.errorContainer {
+  padding: 3rem 0;
+  background: white;
+}
+
+.pageContent {
+  background: white;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.pageHeader {
+  background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.headerOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,0 1000,100 0,80"/></svg>') no-repeat bottom;
+  background-size: cover;
+}
+
+.headerContent {
+  position: relative;
+  z-index: 2;
+}
+
+.pageTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.pageMeta {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.pageBody {
+  padding: 4rem 0;
+  background: white;
+}
+
+.contentWrapper {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.contentWrapper h1,
+.contentWrapper h2,
+.contentWrapper h3 {
+  color: #2c3e50;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contentWrapper h1 {
+  font-size: 2rem;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 0.5rem;
+}
+
+.contentWrapper h2 {
+  font-size: 1.5rem;
+  color: #4CAF50;
+}
+
+.contentWrapper p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.contentWrapper strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.contentWrapper ul,
+.contentWrapper ol {
+  margin-bottom: 1.5rem;
+  padding-right: 2rem;
+}
+
+.contentWrapper li {
+  margin-bottom: 0.5rem;
+}
+
+.defaultContent {
+  padding: 3rem 0;
+  text-align: center;
+  background: white;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .pageHeader {
+    padding: 3rem 0;
+  }
+
+  .pageTitle {
+    font-size: 2.2rem;
+  }
+
+  .pageBody {
+    padding: 2rem 0;
+  }
+
+  .contentWrapper {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .loadingContainer,
+  .errorContainer,
+  .defaultContent {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageTitle {
+    font-size: 1.8rem;
+  }
+
+  .pageHeader {
+    padding: 2rem 0;
+  }
+}
+

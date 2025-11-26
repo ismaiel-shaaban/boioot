@@ -1,0 +1,214 @@
+.mainContent {
+  padding: 30px 0;
+}
+
+.profileTabs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabItem {
+  padding: 15px;
+  text-align: center;
+  border-radius: 30px;
+  background-color: #f2fff2;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tabItem:hover {
+  background-color: #e8f5e9;
+}
+
+.tabItem.active {
+  background-color: #2d7c18;
+  color: white;
+  font-weight: 600;
+}
+
+.settingsDropdown {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.settingsOption {
+  padding: 15px;
+  background-color: #f2fff2;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.settingsOption:last-child {
+  border-bottom: none;
+}
+
+.settingsOption:hover {
+  background-color: #e8f5e9;
+}
+
+.settingsOption.active {
+  background-color: #2d7c18;
+  color: white;
+  font-weight: 600;
+}
+
+.contentArea {
+  background-color: #ebebeb;
+  border-radius: 10px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0;
+  text-align: right;
+}
+
+.tabActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tabActions button {
+  min-width: 150px;
+}
+
+.btnAddCard,
+.btnAddLicense {
+  background: linear-gradient(135deg, #38c172 0%, #2d995b 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 20px rgba(56, 193, 114, 0.3);
+  font-weight: 600;
+}
+
+.btnAddCard:hover,
+.btnAddLicense:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(46, 160, 92, 0.35);
+}
+
+.cancellationDialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialogOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialogContent {
+  position: relative;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  z-index: 1001;
+}
+
+.dialogTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.dialogMessage {
+  margin-bottom: 30px;
+  text-align: right;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btnCancel {
+  background-color: #f2fff2;
+  color: #2d7c18;
+  border: 1px solid #dbeafa;
+  padding: 10px 30px;
+  margin-right: 3px;
+}
+
+.paginationContainer {
+  margin-top: 30px;
+}
+
+/* Pagination Styles to match Angular */
+.pagination .page-item {
+  margin: 0 4px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: white !important;
+}
+
+.pagination .page-link {
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.pagination .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  outline: none;
+}
+
+.pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.tabContent {
+  padding: 20px 0;
+}
+
+@media (max-width: 991px) {
+  .profileTabs {
+    margin-bottom: 30px;
+  }
+}
+

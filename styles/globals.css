@@ -1,0 +1,157 @@
+/* Global styles */
+:root {
+  --bs-success: #2d7c18;
+  --bs-success-rgb: 45, 124, 24;
+  --bs-primary: #106ab8;
+  --bs-primary-rgb: 16, 106, 184;
+}
+
+body {
+  background-color: #f0f0f0 !important;
+  font-family: 'Cairo', sans-serif !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* RTL specific adjustments */
+.form-check {
+  padding-right: 1.5em;
+  padding-left: 0;
+}
+
+.form-check .form-check-input {
+  float: right;
+  margin-right: -1.5em;
+  margin-left: 0;
+}
+
+.dropdown-menu-end {
+  --bs-position: start;
+}
+
+/* Custom utility classes */
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* Button styles */
+.btn-success {
+  background-color: #2d7c18;
+  border-color: #2d7c18;
+}
+
+.btn-success:hover, .btn-success:focus {
+  background-color: #246313;
+  border-color: #246313;
+}
+
+.btn-primary {
+  background-color: #106ab8;
+  border-color: #106ab8;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #0d5a9e;
+  border-color: #0d5a9e;
+}
+
+.toast-success {
+  background-color: #4bbb58;
+  color: white;
+  z-index: 9999999999999;
+}
+
+.toast-error {
+  background-color: #db4040;
+  color: white;
+  z-index: 9999999999999;
+}
+
+.toast-warning {
+  background-color: #ffa000;
+  color: white;
+  z-index: 9999999999999;
+}
+
+/* Main Layout Styles */
+.main-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+/* Home Page Styles */
+.listings-header h5 {
+  color: #333;
+  font-weight: 600;
+  border-bottom: 2px solid #14b74d;
+  padding-bottom: 10px;
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination .page-item {
+  margin: 0 4px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: white !important;
+}
+
+.pagination .page-link {
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background-color: white;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.pagination .page-link:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.pagination .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  outline: none;
+}
+
+.pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination .page-item.disabled .page-link:hover {
+  background-color: white;
+  color: #28a745;
+}
+
+/* Community and Blogs Pages */
+.community-page {
+  background: #fff;
+  min-height: 100vh;
+  direction: rtl;
+  font-family: Cairo, sans-serif;
+  padding: 30px 0;
+}
+

@@ -1,0 +1,393 @@
+.userProfilePage {
+  font-family: 'Cairo', sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.mainCard {
+  background-color: #fff;
+  width: 80%;
+  margin: 0% 10%;
+  padding: 5% 0%;
+  border: none;
+  border-radius: 25px;
+}
+
+.btn {
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btnAddAd,
+.btnHome {
+  background-color: #2d7c18;
+  color: white;
+}
+
+.btnAddAd:hover,
+.btnHome:hover {
+  background-color: #047857;
+}
+
+.logo {
+  text-align: left;
+}
+
+.logoText {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d7c18;
+  text-decoration: none;
+}
+
+/* Main Content */
+.mainContent {
+  padding: 20px 0;
+}
+
+.pageTitle {
+  text-align: right;
+  margin-bottom: 3%;
+  margin-right: 10%;
+}
+
+.pageTitle h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+/* Packages Section */
+.packagesSection {
+  margin-bottom: 50px;
+}
+
+.packageCard {
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 0.5px solid #e5e7eb;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.packageCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.packageTopLineWhite {
+  height: 20%;
+  background-color: white;
+}
+
+.packageTopLine {
+  height: 4px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.goldPackage {
+  border-color: #d27d08;
+}
+
+.goldenTxt {
+  color: #d27d08 !important;
+}
+
+.silverPackage {
+  border-color: #9ca3af;
+}
+
+.packageHeader {
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+  margin-top: 4px;
+  background-color: white;
+}
+
+.goldPackage .packageHeader {
+  background-image: linear-gradient(135deg, #ff9a00, #f2c235, #ff9a00);
+}
+
+.silverPackage .packageHeader {
+  background-image: linear-gradient(135deg, #9ca3af, #cacaca, #848484);
+}
+
+.packageName {
+  margin: 0;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.packageContent {
+  padding: 40px 30px;
+  padding-bottom: 100px;
+}
+
+.packageDetails {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adsSection {
+  /* text-align: right; */
+}
+
+.adsCount {
+  font-size: 22px;
+  color: #374151;
+  line-height: 1;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.adsLabel {
+  font-size: 16px;
+  color: #3e3e3e;
+  font-weight: bold;
+  text-align: right;
+}
+
+.priceSection {
+  text-align: center;
+}
+
+.priceInfo {
+  margin-bottom: 8px;
+}
+
+.currentPrice {
+  font-size: 24px;
+  font-weight: 700;
+  color: #212121;
+  text-align: left;
+}
+
+.originalPrice {
+  font-size: 18px;
+  color: #676767;
+  text-decoration: line-through;
+  margin-left: 8px;
+  text-align: left;
+}
+
+.priceLabel {
+  font-size: 16px;
+  color: #3e3e3e;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Subscription Options */
+.subscriptionOptions {
+  margin-bottom: 0px;
+  background-color: #f2fff2;
+  direction: ltr;
+  padding: 0.5% 0%;
+}
+
+.pricingSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0.5% 10%;
+}
+
+.paymentButton {
+  order: 1;
+}
+
+.btnPayment {
+  background-color: #2d7c18;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnPayment:hover:not(:disabled) {
+  background-color: #047857;
+}
+
+.btnPayment:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pricingInfo {
+  order: 2;
+  text-align: center;
+}
+
+.totalPrice {
+  font-size: 30px;
+  font-weight: 500;
+  color: #2d7c18;
+}
+
+.pricingInfo > div {
+  width: 50px;
+}
+
+.periodSection {
+  order: 3;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.pricingLabel {
+  font-size: 16px;
+  color: #2d7c18;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.periodToggle {
+  display: flex;
+  background-color: #d4f4cb;
+  border-radius: 25px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.periodBtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.periodBtn.active {
+  background-color: #2d7c18;
+  color: white;
+}
+
+.periodBtn:hover:not(.active) {
+  background-color: #e5e7eb;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .pageTitle h1 {
+    font-size: 20px;
+  }
+
+  .packageDetails {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .pricingSection {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .periodSection {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navButtons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .navActions {
+    gap: 10px;
+  }
+
+  .locationIcon,
+  .notificationIcon,
+  .favoriteIcon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .mainContent {
+    padding: 30px 0;
+  }
+
+  .pageTitle h1 {
+    font-size: 18px;
+  }
+
+  .packageContent {
+    padding: 30px 20px;
+  }
+
+  .adsCount {
+    font-size: 36px;
+  }
+
+  .currentPrice {
+    font-size: 20px;
+  }
+
+  .totalPrice {
+    font-size: 28px;
+  }
+
+  .btnPayment {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .packageCard {
+    padding-bottom: 60px;
+  }
+
+  .pricingSection {
+    padding: 1.5% 10%;
+  }
+}
+
+@media (max-width: 576px) {
+  .topNav {
+    padding: 10px 0;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+
+  .packagesSection .row {
+    margin: 0 -10px;
+  }
+
+  .packagesSection .col-12 {
+    padding: 0 10px;
+  }
+
+  .logoText {
+    font-size: 24px;
+  }
+}
+

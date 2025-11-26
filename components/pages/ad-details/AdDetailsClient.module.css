@@ -1,0 +1,290 @@
+/* Ad Details Page Styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+/* Price Section */
+.price {
+  font-size: 28px;
+  font-weight: 600;
+  color: #2d7c18;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Sidebar Section */
+.sidebarSection {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+/* Video Hero Section */
+.videoHeroSection {
+  background: white;
+  padding: 0;
+  margin-bottom: 50px;
+}
+
+.videoContainer {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 50px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.videoThumbnailContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoThumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.playButton {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+  background: white;
+}
+
+.playButton i {
+  font-size: 24px;
+  color: #2d7c18;
+  margin-left: 4px;
+}
+
+.noVideoMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  text-align: center;
+}
+
+.noVideoMessage i {
+  font-size: 48px;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+.noVideoMessage p {
+  font-size: 16px;
+  margin: 0;
+  color: #999;
+}
+
+.knowMoreTitle {
+  color: #515151;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Video Modal */
+.videoModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.videoModalContent {
+  background: white;
+  border-radius: 12px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.videoModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.videoModalHeader h4 {
+  margin: 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.closeBtn:hover {
+  background-color: #f0f0f0;
+}
+
+.videoModalBody {
+  padding: 0;
+}
+
+.projectVideo {
+  width: 100%;
+  max-height: 70vh;
+  display: block;
+}
+
+/* Ad Info Section */
+.adInfoSection {
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.actionButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.actionBtn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px 50px 50px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.infoBtn {
+  background-color: #2d7c18;
+  color: white;
+}
+
+.infoBtn:hover {
+  background-color: #246313;
+}
+
+.detailsBtn {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.detailsBtn:hover {
+  background-color: #e9e9e9;
+}
+
+.adDetails {
+  margin-top: 10px;
+}
+
+.detailsRow {
+  display: flex;
+  margin-bottom: 15px;
+  gap: 20px;
+}
+
+.detailItem {
+  flex: 1;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding-bottom: 3%;
+}
+
+.detailLabel {
+  font-size: 14px;
+  color: #666;
+  min-width: 35%;
+}
+
+.detailValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  padding-right: 15%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .videoContainer {
+    height: 300px;
+  }
+
+  .videoModalContent {
+    max-width: 95%;
+    max-height: 95%;
+  }
+
+  .projectVideo {
+    max-height: 60vh;
+  }
+
+  .detailsRow {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+
+  .price {
+    font-size: 24px;
+  }
+}
+

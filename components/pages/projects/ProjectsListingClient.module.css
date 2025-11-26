@@ -1,0 +1,172 @@
+.projectsListingContainer {
+  background-color: #ffffff;
+  min-height: 100vh;
+  direction: rtl;
+}
+
+.pageHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pageTitle {
+  color: #2d7c18;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.pageDescription {
+  color: #666;
+  font-size: 16px;
+}
+
+.filtersSection {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filterGroup {
+  margin-bottom: 15px;
+}
+
+.filterLabel {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.filterOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filterOption {
+  padding: 8px 15px;
+  border-radius: 50px;
+  background-color: #f0f0f0;
+  border: none;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterOption.active {
+  background-color: #2d7c18;
+  color: white;
+}
+
+.formSelect {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 50px;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 14px;
+  background-position: left 15px center;
+}
+
+.projectsGrid {
+  margin-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.paginationContainer {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.pagination .pageLink {
+  color: #2d7c18;
+  border-color: #ddd;
+  padding: 8px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.pagination .pageLink:hover {
+  background-color: #f8f9fa;
+  border-color: #2d7c18;
+  color: #2d7c18;
+}
+
+.pagination .pageItem.active .pageLink {
+  background-color: #2d7c18;
+  border-color: #2d7c18;
+  color: white;
+}
+
+.pagination .pageItem.disabled .pageLink {
+  color: #aaa;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination .pageItem.disabled .pageLink:hover {
+  background-color: transparent;
+  border-color: #ddd;
+  color: #aaa;
+}
+
+.paginationInfo {
+  margin-top: 15px;
+}
+
+.paginationInfo small {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .projectsListingContainer {
+    padding: 30px 0;
+  }
+
+  .pageTitle {
+    font-size: 24px;
+  }
+
+  .pageDescription {
+    font-size: 14px;
+  }
+
+  .filtersSection {
+    padding: 15px;
+  }
+
+  .filterOption {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .projectsListingContainer {
+    padding: 20px 0;
+  }
+
+  .pageTitle {
+    font-size: 22px;
+  }
+
+  .filterOptions {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filterOption {
+    white-space: nowrap;
+  }
+}

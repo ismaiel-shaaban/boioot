@@ -1,0 +1,329 @@
+.projectCard {
+  background-color: #f8f9fa;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 30px;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  width: 100%;
+}
+
+.projectCard:hover {
+  transform: translateY(-2px);
+  background-color: #e8f5e9;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.projectImage {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 20px 2px 2px;
+}
+
+.projectImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.actionBtn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.795);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.actionBtn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.favoriteBtn {
+  top: 15px;
+  left: 15px;
+}
+
+.favoriteBtn i {
+  color: #ff6b6b;
+  font-size: 18px;
+}
+
+.shareBtn {
+  top: 65px;
+  left: 15px;
+}
+
+.shareBtn i {
+  color: #2d7c18;
+  font-size: 18px;
+}
+
+.statusBadges {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 8px;
+}
+
+.statusBadge {
+  padding: 6px 15px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.611);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.keyBadge {
+  color: #2d7c18;
+}
+
+.featuredBadge {
+  color: #2d7c18;
+}
+
+.projectInfo {
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  padding: 3%;
+}
+
+.projectTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.projectTitle .title {
+  color: #2d7c18;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.projectTitle .title:hover {
+  color: #1a5a12;
+  transform: scale(1.02);
+}
+
+.projectLogo {
+  width: 30px;
+  height: 30px;
+}
+
+.projectLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.projectLocation {
+  margin-bottom: 15px;
+}
+
+.projectLocation p {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+  text-align: right;
+}
+
+.projectFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.priceButton {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  color: #2d7c18;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 10px;
+  gap: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.priceButton:hover {
+  background-color: #2d7c18;
+  color: white;
+  transform: scale(1.05);
+}
+
+.priceLabel {
+  margin-left: 5px;
+  font-weight: bolder;
+  font-size: 18px;
+}
+
+.priceValue {
+  font-weight: bolder;
+  font-size: 18px;
+}
+
+.priceButton i {
+  margin-right: 5px;
+  background-color: #2d7c18;
+  color: white;
+  padding: 20px 20px;
+  border-radius: 50px;
+}
+
+.categoryTag {
+  background-color: #e8f5e9;
+  color: #2d7c18;
+  padding: 6px 15px;
+  border-radius: 50px;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.categoryTag:hover {
+  background-color: #2d7c18;
+  color: white;
+  transform: scale(1.05);
+}
+
+.profileActionsBottom {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e9ecef;
+}
+
+.actionBtnBottom {
+  width: 140px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.actionBtnBottom:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.updateBtn {
+  background-color: #fff;
+  color: #2d7c18;
+  border: 1px solid #2d7c18;
+}
+
+.updateBtn:hover {
+  background-color: #2d7c18;
+  color: #fff;
+  border: 1px solid #2d7c18;
+}
+
+.deleteBtn {
+  background-color: #fff;
+  color: #2d7c18;
+  border: 1px solid #2d7c18;
+}
+
+.deleteBtn:hover {
+  background-color: #2d7c18;
+  color: #fff;
+  border: 1px solid #2d7c18;
+}
+
+@media (max-width: 768px) {
+  .projectImage {
+    height: 180px;
+  }
+
+  .projectTitle .title {
+    font-size: 18px;
+  }
+
+  .projectLocation p {
+    font-size: 13px;
+  }
+
+  .priceButton {
+    padding: 8px 15px;
+    font-size: 13px;
+  }
+
+  .actionBtn {
+    width: 35px;
+    height: 35px;
+  }
+
+  .statusBadge {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .projectImage {
+    height: 160px;
+  }
+
+  .actionBtn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .favoriteBtn i,
+  .shareBtn i {
+    font-size: 16px;
+  }
+
+  .projectTitle .title {
+    font-size: 16px;
+  }
+
+  .projectFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .categoryTag {
+    align-self: flex-end;
+  }
+
+  .projectCard {
+    height: 450px;
+  }
+}
+
