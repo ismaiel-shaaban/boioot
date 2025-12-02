@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { membershipService } from '@/lib/services/membership';
 import { showToast } from '@/lib/utils/toast';
-import PhoneInput from 'react-phone-number-input';
+import PhoneInput, { Country } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+import CountrySelect from './CountrySelect';
 import styles from './AuthModal.module.css';
 
 interface RegisterModalProps {
@@ -38,6 +39,8 @@ export default function RegisterModal({ onClose, onOpenLogin }: RegisterModalPro
   const [accountType, setAccountType] = useState<string>('0');
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<Country>('SY');
+  const phoneInputContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getMembershipTypes();
@@ -122,10 +125,17 @@ export default function RegisterModal({ onClose, onOpenLogin }: RegisterModalPro
       isPhoneValid() &&
       isEmailValid() &&
       Object.values(passwordRequirements).every(Boolean) &&
-      password === confirmPassword &&
       fullName.trim() !== '' &&
       email.trim() !== ''
     );
+  };
+
+  // Get unmet password requirements for dynamic display
+  const unmetRequirements = {
+    hasLength: !passwordRequirements.hasLength,
+    hasUpperCase: !passwordRequirements.hasUpperCase,
+    hasLowerCase: !passwordRequirements.hasLowerCase,
+    hasNumber: !passwordRequirements.hasNumber,
   };
 
   const handleNextStep = async () => {
@@ -180,16 +190,23 @@ export default function RegisterModal({ onClose, onOpenLogin }: RegisterModalPro
     setIsLoading(true);
     try {
       const response = await register(phoneNumber, fullName, email, password, accountType);
-      if (response?.IsSuccess) {
+      if (response?.IsSuccess || response?.Success) {
         showToast(response?.Message || 'تم إنشاء الحساب بنجاح', 'success');
-        setCurrentStep(4);
-      } else {
+        // Close register modal and open login modal on success
         onClose();
+        setTimeout(() => {
+          onOpenLogin();
+        }, 300);
+      } else {
+        // Don't close modal on error, just display error message
+        setErrorMessage(response?.Error || 'فشل إنشاء الحساب');
         showToast(response?.Error || 'فشل إنشاء الحساب', 'error');
       }
     } catch (error: any) {
-      onClose();
-      showToast(error?.message || 'حدث خطأ', 'error');
+      // Don't close modal on error, just display error message
+      const errorMsg = error?.Error || error?.message || 'حدث خطأ أثناء إنشاء الحساب';
+      setErrorMessage(errorMsg);
+      showToast(errorMsg, 'error');
     } finally {
       setIsLoading(false);
     }
@@ -289,19 +306,32 @@ export default function RegisterModal({ onClose, onOpenLogin }: RegisterModalPro
                   </div>
 
                   <div className="form-floating mb-3">
-                    <div className="phone-number-input-class width-95">
+                    <div 
+                      ref={phoneInputContainerRef}
+                      className={`phone-number-input-class d-flex align-items-stretch ${styles.phoneInputWrapper}`} 
+                      style={{ width: '100%' }}
+                    >
+                      <CountrySelect
+                        value={selectedCountry}
+                        onChange={setSelectedCountry}
+                        preferredCountries={['SA', 'SY']}
+                        defaultCountry="SY"
+                        containerRef={phoneInputContainerRef}
+                      />
                       <PhoneInput
                         international
-                        defaultCountry="SA"
+                        country={selectedCountry}
                         value={phoneNumber}
                         onChange={(value) => {
                           setPhoneNumber(value || '');
                           validatePhoneNumber();
                         }}
                         className={phoneNumberInvalid ? 'is-invalid' : ''}
+                        placeholder="رقم الهاتف"
+                        countrySelectProps={{ style: { display: 'none' } }}
                       />
                       {phoneNumberInvalid && (
-                        <div className="invalid-feedback" role="alert">
+                        <div className="invalid-feedback" role="alert" style={{ position: 'absolute', bottom: '-20px', right: '5%' }}>
                           رقم الهاتف غير صحيح
                         </div>
                       )}
@@ -343,47 +373,43 @@ export default function RegisterModal({ onClose, onOpenLogin }: RegisterModalPro
                         <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
                       </button>
                     </div>
-                    <div className={`${styles.passwordRequirements} text-muted small`}>
-                      <div className={styles.passwordStrengthMeter + ' mb-2'}>
-                        <div className={styles.strengthBar} style={{ width: `${passwordStrength()}%` }}></div>
+                  
+                      <div className={`${styles.passwordRequirements} text-muted small`}>
+                        <div className={styles.passwordStrengthMeter + ' mb-2'}>
+                          <div className={styles.strengthBar} style={{ width: `${passwordStrength()}%` }}></div>
+                        </div>
+                        <ul>
+                          {unmetRequirements.hasLength && (
+                            <li className={passwordRequirements.hasLength ? 'text-success' : ''}>8 أحرف على الأقل</li>
+                          )}
+                          {unmetRequirements.hasUpperCase && (
+                            <li className={passwordRequirements.hasUpperCase ? 'text-success' : ''}>
+                              حرف كبير واحد على الأقل
+                            </li>
+                          )}
+                          {unmetRequirements.hasLowerCase && (
+                            <li className={passwordRequirements.hasLowerCase ? 'text-success' : ''}>
+                              حرف صغير واحد على الأقل
+                            </li>
+                          )}
+                          {unmetRequirements.hasNumber && (
+                            <li className={passwordRequirements.hasNumber ? 'text-success' : ''}>رقم واحد على الأقل</li>
+                          )}
+                        </ul>
                       </div>
-                      <ul>
-                        <li className={passwordRequirements.hasLength ? 'text-success' : ''}>8 أحرف على الأقل</li>
-                        <li className={passwordRequirements.hasUpperCase ? 'text-success' : ''}>
-                          حرف كبير واحد على الأقل
-                        </li>
-                        <li className={passwordRequirements.hasLowerCase ? 'text-success' : ''}>
-                          حرف صغير واحد على الأقل
-                        </li>
-                        <li className={passwordRequirements.hasNumber ? 'text-success' : ''}>رقم واحد على الأقل</li>
-                      </ul>
-                    </div>
+                    
                     {submitted && !password && <div className="text-danger">كلمة السر مطلوبة</div>}
+                    {submitted && password && !Object.values(passwordRequirements).every(Boolean) && (
+                      <div className="text-danger">كلمة السر يجب أن تحتوي على الأقل 8 أحرف، حرف كبير، حرف صغير، رقم</div>
+                    )}
                   </div>
 
-                  <div className="form-floating mb-3">
-                    <div className={styles.passwordInputContainer}>
-                      <input
-                        type={showConfirmPassword ? 'text' : 'password'}
-                        id="confirmRegisterPassword"
-                        className="form-control"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="تأكيد كلمة السر"
-                        aria-label="تأكيد كلمة السر"
-                      />
-                      <button
-                        type="button"
-                        className={styles.togglePassword}
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        aria-label="إظهار/إخفاء تأكيد كلمة السر"
-                      >
-                        <i className={`fas ${showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-                      </button>
+                  {errorMessage && (
+                    <div className="alert alert-danger mt-3" role="alert">
+                      {errorMessage}
                     </div>
-                    {password !== confirmPassword && <div className="text-danger">تأكيد كلمة السر غير متطابق</div>}
-                  </div>
-
+                  )}
+                  
                   <button
                     className="btn btn-success w-100"
                     onClick={handleSubmit}

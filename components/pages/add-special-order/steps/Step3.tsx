@@ -39,33 +39,68 @@ const Step3 = forwardRef<Step3Handle, Step3Props>(
     }, []);
 
     useEffect(() => {
-      if (advertisementFormState?.step3) {
+      // Only populate if we have both saved data and property types loaded
+      if (advertisementFormState?.step3 && propertyTypes.length > 0) {
         populateFormWithSavedData(advertisementFormState.step3);
       }
-    }, [advertisementFormState?.step3]);
+    }, [advertisementFormState?.step3, propertyTypes]);
 
     const populateFormWithSavedData = (savedData: any) => {
-      if (savedData) {
-        setAdvertisementForm((prev) => ({
-          ...prev,
-          ...savedData,
-        }));
-        updateValidationStatus();
+      if (!savedData) return;
+
+      let propertyTypeValue = savedData.propertyType;
+      
+      // If propertyType is a string, try to find matching property type by label
+      if (typeof propertyTypeValue === 'string' && propertyTypes.length > 0) {
+        const match = propertyTypes.find((pt) => pt.label === propertyTypeValue);
+        if (match) propertyTypeValue = match.value;
       }
+
+      // Ensure we have a valid numeric value
+      const numericValue = Number(propertyTypeValue) || 0;
+
+      setAdvertisementForm((prev) => ({
+        ...prev,
+        propertyType: numericValue,
+      }));
+      updateValidationStatus();
     };
 
     const loadPropertyTypes = async () => {
       setIsLoadingPropertyTypes(true);
       try {
+        console.log('Loading property types from API...');
         const propertyTypesData = await unitTypesService.getPropertyTypes();
+        console.log('Property types received:', propertyTypesData);
+        
+        if (!propertyTypesData || propertyTypesData.length === 0) {
+          console.warn('No property types received from API');
+          showToast('لم يتم العثور على أنواع عقارات', 'warning');
+          setPropertyTypes([]);
+          setIsLoadingPropertyTypes(false);
+          return;
+        }
+
         // For special orders, filter only special order types
         const filteredTypes = propertyTypesData.filter((pt: any) =>
-          pt.label.includes('طلب خاص') || pt.label.includes('تسويق')
+          pt.label && (pt.label.includes('طلب خاص') || pt.label.includes('تسويق'))
         );
-        setPropertyTypes(filteredTypes);
+        
+        console.log('Filtered property types for special orders:', filteredTypes);
+        
+        if (filteredTypes.length === 0) {
+          console.warn('No special order types found after filtering');
+          // If no filtered types, show all types as fallback
+          setPropertyTypes(propertyTypesData);
+        } else {
+          setPropertyTypes(filteredTypes);
+        }
+        
+        // The useEffect with propertyTypes dependency will handle re-population
       } catch (error: any) {
         console.error('Error loading property types:', error);
-        showToast('فشل في تحميل أنواع العقارات', 'error');
+        showToast(error?.message || 'فشل في تحميل أنواع العقارات', 'error');
+        setPropertyTypes([]);
       } finally {
         setIsLoadingPropertyTypes(false);
       }
@@ -122,7 +157,7 @@ const Step3 = forwardRef<Step3Handle, Step3Props>(
 
       try {
         const response = await specialOrderService.updateUnitType({
-          AdUnitUpdate: {
+          Order: {
             Id: specialOrderId,
             Step: 3,
             UnitType: advertisementForm.propertyType,

@@ -368,17 +368,45 @@
   position: relative;
 }
 
+.phoneNumberInputContainer {
+  position: relative;
+  overflow: visible !important;
+}
+
+.phoneInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Ensure seamless connection between country select and phone input */
+.phoneInputWrapper > * {
+  margin: 0 !important;
+  gap: 0 !important;
+}
+
+/* Make phone input take full available width */
+.phoneInputWrapper :global(.PhoneInput) {
+  flex: 1;
+  min-width: 0;
+}
+
 .phoneNumberInputContainer :global(.PhoneInput) {
   display: flex;
   align-items: center;
   width: 100%;
-  border-radius: 18px;
-  border: 1.5px solid #e0f2e9;
+  border-radius: 0 15px 15px 0;
+  border: 1px solid #ced4da;
+  border-left: none;
   background: #fff;
-  padding: 0.8rem 1rem;
+  padding: 0.75rem 1rem;
   font-size: 15px;
   color: #707070;
   transition: all 0.2s;
+  height: 58px;
 }
 
 .phoneNumberInputContainer :global(.PhoneInput:hover) {
@@ -407,10 +435,80 @@
   margin: 0;
 }
 
-.phoneNumberInputContainer :global(.PhoneInputCountryIcon) {
-  width: 1.5em;
-  height: 1.5em;
-  margin-left: 0.5rem;
+/* Style PhoneInput when country selector is hidden - seamless connection */
+.phone-number-input-class :global(.PhoneInput),
+.phoneInputWrapper :global(.PhoneInput) {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  border-radius: 0 15px 15px 0;
+  border-top: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  border-bottom: 1px solid #ced4da;
+  border-left: none;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  font-size: 15px;
+  color: #707070;
+  transition: all 0.2s;
+  height: 58px;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+/* Remove any gaps or separators */
+.phone-number-input-class :global(.PhoneInput > *),
+.phoneInputWrapper :global(.PhoneInput > *) {
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 !important;
+}
+
+/* Ensure PhoneInputInput takes full width and has no borders/gaps */
+.phone-number-input-class :global(.PhoneInputInput),
+.phoneInputWrapper :global(.PhoneInputInput) {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  font-size: 15px !important;
+  color: #707070 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex: 1 !important;
+}
+
+.phone-number-input-class :global(.PhoneInput:focus-within),
+.phoneInputWrapper :global(.PhoneInput:focus-within) {
+  outline: none;
+  border-color: #198754;
+  border-left: none;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.phone-number-input-class :global(.PhoneInput.is-invalid),
+.phoneInputWrapper :global(.PhoneInput.is-invalid) {
+  border-top-color: #dc3545;
+  border-right-color: #dc3545;
+  border-bottom-color: #dc3545;
+  border-left: none;
+}
+
+/* Hide PhoneInput's built-in country selector when using custom CountrySelect */
+.phone-number-input-class :global(.PhoneInputCountry),
+.phoneInputWrapper :global(.PhoneInputCountry) {
+  display: none !important;
+}
+
+/* Hide all icons and separators between country select and phone input */
+.phoneNumberInputContainer :global(.PhoneInputCountryIcon),
+.phoneNumberInputContainer :global(.PhoneInputCountrySelectArrow),
+.phone-number-input-class :global(.PhoneInputCountryIcon),
+.phone-number-input-class :global(.PhoneInputCountrySelectArrow),
+.phoneInputWrapper :global(.PhoneInputCountryIcon),
+.phoneInputWrapper :global(.PhoneInputCountrySelectArrow) {
+  display: none !important;
 }
 
 .phoneNumberInputContainer :global(.PhoneInputCountrySelect) {
@@ -421,9 +519,106 @@
   cursor: pointer;
 }
 
-.phoneNumberInputContainer :global(.PhoneInputCountrySelectArrow) {
-  opacity: 0.5;
-  margin-left: 0.25rem;
+/* Country dropdown styling to match Angular design */
+.phoneNumberInputContainer :global(.PhoneInputCountry) {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Country dropdown list - matches Angular iti__dropdown-content */
+.phoneNumberInputContainer :global(.PhoneInputCountryOptions) {
+  position: absolute !important;
+  top: calc(100% + 4px) !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 999999 !important;
+  background: white !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  width: 260px !important;
+  padding: 1px !important;
+  direction: rtl !important;
+}
+
+/* Search input in country dropdown - matches Angular */
+.phoneNumberInputContainer :global(.PhoneInputCountryOptions input[type="search"]) {
+  width: 100% !important;
+  padding: 8px 12px !important;
+  border: none !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+  outline: none !important;
+  font-size: 14px !important;
+  direction: rtl !important;
+  text-align: right !important;
+  background: white !important;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputCountryOptions input[type="search"]::placeholder) {
+  color: #999;
+  text-align: right;
+}
+
+/* Country option items - matches Angular design */
+.phoneNumberInputContainer :global(.PhoneInputCountryOption) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s !important;
+  direction: rtl !important;
+  text-align: right !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputCountryOption:last-child) {
+  border-bottom: none !important;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputCountryOption:hover) {
+  background-color: #f5f5f5 !important;
+}
+
+.phoneNumberInputContainer :global(.PhoneInputCountryOption--selected) {
+  background-color: #e3f2fd !important;
+}
+
+/* Country flag in dropdown option */
+.phoneNumberInputContainer :global(.PhoneInputCountryOption .PhoneInputCountryIcon) {
+  width: 20px !important;
+  height: 15px !important;
+  flex-shrink: 0 !important;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+/* Country name in dropdown - matches Angular format */
+.phoneNumberInputContainer :global(.PhoneInputCountryOption span:not(.PhoneInputCountryCallingCode)) {
+  flex: 1 !important;
+  font-size: 14px !important;
+  color: #333 !important;
+  text-align: right !important;
+}
+
+/* Dial code in dropdown - matches Angular format (966+ المملكة العربية السعودية) */
+.phoneNumberInputContainer :global(.PhoneInputCountryOption .PhoneInputCountryCallingCode) {
+  color: #666 !important;
+  font-size: 14px !important;
+  margin-left: auto !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure modal doesn't clip the dropdown */
+.modalContent {
+  overflow: visible !important;
+}
+
+.modalBody {
+  overflow: visible !important;
 }
 
 /* Responsive */

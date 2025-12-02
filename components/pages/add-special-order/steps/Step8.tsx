@@ -268,17 +268,20 @@ const Step8 = forwardRef<Step8Handle, Step8Props>(
           </button>
         </div>
 
-        <div className="d-flex flex-wrap gap-2 mb-3">
-          {features.map((feature) => (
-            <button
-              key={feature.Id}
-              type="button"
-              className={`btn ${isFeatureSelected(feature) ? 'btn-success' : 'btn-outline-success'}`}
-              onClick={() => toggleFeature(feature)}
-            >
-              {feature?.Name}
-            </button>
-          ))}
+        <div className={styles.featuresSection}>
+          <div className={styles.featuresGrid}>
+            {features.map((feature) => (
+              <button
+                key={feature.Id}
+                type="button"
+                className={`${styles.featureTag} ${isFeatureSelected(feature) ? styles.selected : ''}`}
+                onClick={() => toggleFeature(feature)}
+                aria-label="اختيار ميزة"
+              >
+                {feature?.Name}
+              </button>
+            ))}
+          </div>
         </div>
 
         {fieldErrors['selectedFeatures'] && (

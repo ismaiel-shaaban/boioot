@@ -137,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       Email: email,
       PhoneNumber: phoneNumber,
       Password: password,
-      UserType: accountType,
+      UserType: Number(accountType),
     };
 
     return apiClient.post(

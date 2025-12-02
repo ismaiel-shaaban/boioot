@@ -74,17 +74,22 @@ const Step7 = forwardRef<Step7Handle, Step7Props>(
     };
 
     const onFieldFocus = (fieldName: string) => {
-      setFieldInteractionStates((prev) => ({ ...prev, [fieldName]: false }));
+      setFieldInteractionStates((prev) => ({ ...prev, [fieldName]: true }));
     };
 
     const onFieldBlur = (fieldName: string) => {
-      setFieldInteractionStates((prev) => ({ ...prev, [fieldName]: true }));
+      validateField(fieldName);
+      updateValidationStatus();
+    };
+
+    const onFieldChange = (fieldName: string) => {
+      // Validate in real-time as user types
       validateField(fieldName);
       updateValidationStatus();
     };
 
     const shouldShowFieldFeedback = (fieldName: string): boolean => {
-      return fieldInteractionStates[fieldName] === true;
+      return fieldInteractionStates[fieldName] && !!fieldErrors[fieldName];
     };
 
     const getFieldError = (fieldName: string): string => {
@@ -221,86 +226,93 @@ const Step7 = forwardRef<Step7Handle, Step7Props>(
 
         <div className="form-group mb-4">
           <label className="form-label">عدد الغرف</label>
-          <div className="d-flex gap-2 flex-wrap">
-            {roomOptions.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={`btn ${detailsForm.numberOfRooms === option ? 'btn-success' : 'btn-outline-success'}`}
-                onClick={() => {
-                  setDetailsForm((prev) => ({ ...prev, numberOfRooms: option }));
-                  onSelectionChange('numberOfRooms');
-                }}
-              >
-                {option === 5 ? '+5' : option}
-              </button>
-            ))}
+          <div className={styles.numberSelector}>
+            <div className={styles.numberOptions}>
+              {roomOptions.map((option) => (
+                <div
+                  key={option}
+                  className={`${styles.optionItem} ${detailsForm.numberOfRooms === option ? styles.active : ''}`}
+                  onClick={() => {
+                    setDetailsForm((prev) => ({ ...prev, numberOfRooms: option }));
+                    onSelectionChange('numberOfRooms');
+                  }}
+                >
+                  {option === 5 ? '+5' : option}
+                </div>
+              ))}
+            </div>
           </div>
           {shouldShowFieldFeedback('numberOfRooms') && (
-            <div className="text-danger small mt-1">{getFieldError('numberOfRooms')}</div>
+            <div className="invalid-feedback">{getFieldError('numberOfRooms')}</div>
           )}
         </div>
 
         <div className="form-group mb-4">
           <label className="form-label">الفئة</label>
-          <div className="d-flex gap-2 flex-wrap">
-            {categoryOptions.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className={`btn ${detailsForm.category === option.id ? 'btn-success' : 'btn-outline-success'}`}
-                onClick={() => {
-                  setDetailsForm((prev) => ({ ...prev, category: option.id }));
-                  onSelectionChange('category');
-                }}
-              >
-                {option.label}
-              </button>
-            ))}
+          <div className={styles.numberSelector}>
+            <div className={styles.numberOptions}>
+              {categoryOptions.map((option) => (
+                <div
+                  key={option.id}
+                  className={`${styles.optionItem} ${detailsForm.category == option.id ? styles.active : ''}`}
+                  onClick={() => {
+                    setDetailsForm((prev) => ({ ...prev, category: option.id }));
+                    onSelectionChange('category');
+                  }}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
           </div>
+          {shouldShowFieldFeedback('category') && (
+            <div className="invalid-feedback">{getFieldError('category')}</div>
+          )}
         </div>
 
         <div className="form-group mb-4">
           <label className="form-label">عدد الصالات</label>
-          <div className="d-flex gap-2 flex-wrap">
-            {hallOptions.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={`btn ${detailsForm.numberOfHalls === option ? 'btn-success' : 'btn-outline-success'}`}
-                onClick={() => {
-                  setDetailsForm((prev) => ({ ...prev, numberOfHalls: option }));
-                  onSelectionChange('numberOfHalls');
-                }}
-              >
-                {option === 5 ? '+5' : option}
-              </button>
-            ))}
+          <div className={styles.numberSelector}>
+            <div className={styles.numberOptions}>
+              {hallOptions.map((option) => (
+                <div
+                  key={option}
+                  className={`${styles.optionItem} ${detailsForm.numberOfHalls === option ? styles.active : ''}`}
+                  onClick={() => {
+                    setDetailsForm((prev) => ({ ...prev, numberOfHalls: option }));
+                    onSelectionChange('numberOfHalls');
+                  }}
+                >
+                  {option === 5 ? '+5' : option}
+                </div>
+              ))}
+            </div>
           </div>
           {shouldShowFieldFeedback('numberOfHalls') && (
-            <div className="text-danger small mt-1">{getFieldError('numberOfHalls')}</div>
+            <div className="invalid-feedback">{getFieldError('numberOfHalls')}</div>
           )}
         </div>
 
         <div className="form-group mb-4">
           <label className="form-label">عدد دورات المياه</label>
-          <div className="d-flex gap-2 flex-wrap">
-            {bathroomOptions.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={`btn ${detailsForm.numberOfBathrooms === option ? 'btn-success' : 'btn-outline-success'}`}
-                onClick={() => {
-                  setDetailsForm((prev) => ({ ...prev, numberOfBathrooms: option }));
-                  onSelectionChange('numberOfBathrooms');
-                }}
-              >
-                {option === 5 ? '+5' : option}
-              </button>
-            ))}
+          <div className={styles.numberSelector}>
+            <div className={styles.numberOptions}>
+              {bathroomOptions.map((option) => (
+                <div
+                  key={option}
+                  className={`${styles.optionItem} ${detailsForm.numberOfBathrooms === option ? styles.active : ''}`}
+                  onClick={() => {
+                    setDetailsForm((prev) => ({ ...prev, numberOfBathrooms: option }));
+                    onSelectionChange('numberOfBathrooms');
+                  }}
+                >
+                  {option === 5 ? '+5' : option}
+                </div>
+              ))}
+            </div>
           </div>
           {shouldShowFieldFeedback('numberOfBathrooms') && (
-            <div className="text-danger small mt-1">{getFieldError('numberOfBathrooms')}</div>
+            <div className="invalid-feedback">{getFieldError('numberOfBathrooms')}</div>
           )}
         </div>
 
@@ -313,7 +325,7 @@ const Step7 = forwardRef<Step7Handle, Step7Props>(
                 value={detailsForm.floor}
                 onChange={(e) => {
                   setDetailsForm((prev) => ({ ...prev, floor: parseInt(e.target.value) || 0 }));
-                  onSelectionChange('floor');
+                  onFieldChange('floor');
                 }}
                 onFocus={() => onFieldFocus('floor')}
                 onBlur={() => onFieldBlur('floor')}
@@ -330,29 +342,32 @@ const Step7 = forwardRef<Step7Handle, Step7Props>(
 
           <div className="col-md-6">
             <div className="form-floating mb-4">
-              <div className="position-relative">
-                <span className="position-absolute top-50 start-0 translate-middle-y ms-3" style={{ zIndex: 10 }}>
+              <div className="div" style={{ position: 'relative' }}>
+                <span className={styles.downArrow}>
                   <i className="fa-solid fa-arrow-down"></i>
                 </span>
-                <select
-                  className="form-control"
-                  style={{ paddingLeft: '2rem' }}
-                  value={detailsForm.propertyAge}
-                  onChange={(e) => {
-                    setDetailsForm((prev) => ({ ...prev, propertyAge: parseInt(e.target.value) }));
-                    onSelectionChange('propertyAge');
-                  }}
-                  onFocus={() => onFieldFocus('propertyAge')}
-                  onBlur={() => onFieldBlur('propertyAge')}
-                >
-                  {propertyAgeOptions.map((type) => (
-                    <option key={type.id} value={type.id}>
-                      {type.label}
-                    </option>
-                  ))}
-                </select>
               </div>
+              <select
+                className="form-control"
+                value={detailsForm.propertyAge}
+                onChange={(e) => {
+                  setDetailsForm((prev) => ({ ...prev, propertyAge: parseInt(e.target.value) }));
+                  onSelectionChange('propertyAge');
+                }}
+                onFocus={() => onFieldFocus('propertyAge')}
+                onBlur={() => onFieldBlur('propertyAge')}
+                disabled={isSubmitting}
+              >
+                {propertyAgeOptions.map((type) => (
+                  <option key={type.id} value={type.id}>
+                    {type.label}
+                  </option>
+                ))}
+              </select>
               <label>عمر العقار</label>
+              {shouldShowFieldFeedback('propertyAge') && (
+                <div className="invalid-feedback">{getFieldError('propertyAge')}</div>
+              )}
             </div>
           </div>
         </div>

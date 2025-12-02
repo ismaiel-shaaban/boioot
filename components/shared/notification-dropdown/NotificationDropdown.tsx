@@ -67,7 +67,8 @@ export default function NotificationDropdown({ isOpen, onClose }: NotificationDr
 
   const markNotificationAsRead = async (notificationId: string) => {
     try {
-      const response = await notificationService.markAsRead(notificationId);
+      // Use markMultipleAsRead to match Angular API
+      const response = await notificationService.markMultipleAsRead([notificationId]);
       if (response?.IsSuccess) {
         setNotifications((prev) =>
           prev.map((n) => (n.Id === notificationId ? { ...n, IsRead: true } : n))
@@ -79,8 +80,8 @@ export default function NotificationDropdown({ isOpen, onClose }: NotificationDr
   };
 
   const viewAllNotifications = () => {
-    onClose();
     router.push('/notifications');
+    onClose();
   };
 
   const getNotificationType = (notification: any): { text: string; class: string } => {
@@ -115,6 +116,8 @@ export default function NotificationDropdown({ isOpen, onClose }: NotificationDr
       <div
         className={`${styles.notificationDropdown} d-none d-md-block`}
         onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        data-notification-dropdown="true"
         role="dialog"
         aria-label="قائمة الإشعارات"
       >
@@ -174,8 +177,22 @@ export default function NotificationDropdown({ isOpen, onClose }: NotificationDr
       </div>
 
       {/* Mobile Notification Modal */}
-      <div className={styles.mobileNotificationModal} onClick={onClose} role="dialog" aria-label="الإشعارات على الجوال">
-        <div className={styles.mobileModalContent} onClick={(e) => e.stopPropagation()}>
+      <div 
+        className={styles.mobileNotificationModal} 
+        onClick={(e) => {
+          // Only close if clicking directly on the overlay, not on the content
+          if (e.target === e.currentTarget) {
+            onClose();
+          }
+        }}
+        role="dialog" 
+        aria-label="الإشعارات على الجوال"
+      >
+        <div 
+          className={styles.mobileModalContent} 
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           <div className={styles.mobileModalHeader}>
             <h5>الإشعارات</h5>
             <div className={styles.mobileHeaderActions}>

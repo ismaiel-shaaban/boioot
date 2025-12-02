@@ -179,19 +179,45 @@ export default function TopNav() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as HTMLElement;
+      
+      // Check if click is inside any dropdown element (by class name or data attribute)
+      // The dropdowns use CSS Modules, so we need to check for the actual rendered class
+      const isInsideNotificationDropdown = target.closest('[class*="notificationDropdown"]') !== null ||
+                                         target.closest('[data-notification-dropdown]') !== null;
+      const isInsideFavoritesDropdown = target.closest('[class*="favoritesDropdown"]') !== null ||
+                                       target.closest('[data-favorites-dropdown]') !== null;
+      
+      // Also check if click is on the notification/favorites button
+      const isNotificationButton = target.closest(`.${styles.notificationBtn}`) !== null ||
+                                  target.closest(`.${styles.notificationContainer}`) !== null;
+      const isFavoritesButton = target.closest(`.${styles.favoriteBtn}`) !== null ||
+                               target.closest(`.${styles.favoritesContainer}`) !== null;
+      
+      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
         setIsOpen(false);
       }
-      if (notificationDropdownRef.current && !notificationDropdownRef.current.contains(event.target as Node)) {
+      
+      // Only close notification dropdown if click is outside both the ref container AND the dropdown element AND not on the button
+      if (isNotificationDropdownOpen && 
+          !notificationDropdownRef.current?.contains(target) &&
+          !isInsideNotificationDropdown &&
+          !isNotificationButton) {
         setIsNotificationDropdownOpen(false);
       }
-      if (favoritesDropdownRef.current && !favoritesDropdownRef.current.contains(event.target as Node)) {
+      
+      // Only close favorites dropdown if click is outside both the ref container AND the dropdown element AND not on the button
+      if (isFavoritesDropdownOpen && 
+          !favoritesDropdownRef.current?.contains(target) &&
+          !isInsideFavoritesDropdown &&
+          !isFavoritesButton) {
         setIsFavoritesDropdownOpen(false);
       }
+      
       if (
         authDropdownRef.current &&
-        !authDropdownRef.current.contains(event.target as Node) &&
-        !(event.target as HTMLElement).closest(`.${styles.userAvatar}`)
+        !authDropdownRef.current.contains(target) &&
+        !target.closest(`.${styles.userAvatar}`)
       ) {
         setIsAuthDropdownOpen(false);
       }
@@ -199,7 +225,7 @@ export default function TopNav() {
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [isNotificationDropdownOpen, isFavoritesDropdownOpen]);
 
   const toggleDropdown = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -415,7 +441,7 @@ export default function TopNav() {
                     {unreadNotificationCount > 0 && (
                       <div className={styles.notificationBadge}>{unreadNotificationCount}</div>
                     )}
-                    <div ref={notificationDropdownRef}>
+                    <div ref={notificationDropdownRef} onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
                       <NotificationDropdown
                         isOpen={isNotificationDropdownOpen}
                         onClose={() => {
@@ -442,7 +468,7 @@ export default function TopNav() {
                       )}
                       <i className="fa-solid fa-heart"></i>
                     </button>
-                    <div ref={favoritesDropdownRef}>
+                    <div ref={favoritesDropdownRef} onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
                       <FavoritesDropdown
                         isOpen={isFavoritesDropdownOpen}
                         onClose={() => setIsFavoritesDropdownOpen(false)}
@@ -606,7 +632,7 @@ export default function TopNav() {
                     <i className="fa-solid fa-bell"></i>
                     <span>الإشعارات</span>
                   </button>
-                  <div ref={notificationDropdownRef}>
+                  <div ref={notificationDropdownRef} onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
                     <NotificationDropdown
                       isOpen={isNotificationDropdownOpen}
                       onClose={() => {
@@ -631,7 +657,7 @@ export default function TopNav() {
                     <i className="fa-solid fa-heart"></i>
                     <span>المفضلة</span>
                   </button>
-                  <div ref={favoritesDropdownRef}>
+                  <div ref={favoritesDropdownRef} onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
                     <FavoritesDropdown
                       isOpen={isFavoritesDropdownOpen}
                       onClose={() => setIsFavoritesDropdownOpen(false)}

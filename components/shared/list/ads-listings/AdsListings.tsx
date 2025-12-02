@@ -41,6 +41,7 @@ interface AdsListingsProps {
   showActions?: boolean;
   onEditAd?: (ad: Ad) => void;
   onDeleteAd?: (ad: Ad) => void;
+  onFavoriteToggled?: (ad: Ad) => void;
 }
 
 export default function AdsListings({
@@ -49,6 +50,7 @@ export default function AdsListings({
   showActions = false,
   onEditAd,
   onDeleteAd,
+  onFavoriteToggled,
 }: AdsListingsProps) {
   const { isAuthenticated, getUserProfile } = useAuth();
   const [selectedAd, setSelectedAd] = useState<Ad | null>(null);
@@ -110,6 +112,7 @@ export default function AdsListings({
             onShare={() => openShareModal(ad)}
             onEdit={onEditAd ? () => onEditAd(ad) : undefined}
             onDelete={onDeleteAd ? () => onDeleteAd(ad) : undefined}
+            onFavoriteToggled={onFavoriteToggled}
           />
         ))}
       </div>

@@ -5,6 +5,9 @@
   --bs-primary: #106ab8;
   --bs-primary-rgb: 16, 106, 184;
 }
+a{
+  text-decoration: none !important;
+}
 
 body {
   background-color: #f0f0f0 !important;
@@ -35,25 +38,29 @@ body {
   object-fit: cover;
 }
 
-/* Button styles */
+/* Button styles - matching Angular design */
 .btn-success {
-  background-color: #2d7c18;
-  border-color: #2d7c18;
+  background-color: #2d7c18 !important;
+  border: 1px solid #2d7c18 !important;
+  border-color: #2d7c18 !important;
+  border-radius: 50px !important;
 }
 
 .btn-success:hover, .btn-success:focus {
-  background-color: #246313;
-  border-color: #246313;
+  background-color: #246313 !important;
+  border-color: #246313 !important;
 }
 
 .btn-primary {
-  background-color: #106ab8;
-  border-color: #106ab8;
+  background-color: #106ab8 !important;
+  border: 1px solid #106ab8 !important;
+  border-color: #106ab8 !important;
+  border-radius: 50px !important;
 }
 
 .btn-primary:hover, .btn-primary:focus {
-  background-color: #0d5a9e;
-  border-color: #0d5a9e;
+  background-color: #0d5a9e !important;
+  border-color: #0d5a9e !important;
 }
 
 .toast-success {

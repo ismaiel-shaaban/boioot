@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
+import { useState, useEffect, useImperativeHandle, forwardRef, useRef } from 'react';
 import { AdvertisementMedia, AdvertisementFormState } from '@/lib/core/models/advertisement.models';
 import { specialOrderService } from '@/lib/services/special-order';
 import { projectsService } from '@/lib/services/projects';
@@ -46,10 +46,48 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
 
     const { specialOrderId: advertisementId } = useSpecialOrderState();
     const baseUrl = environment.baseApiUrl;
+    
+    // Use ref to track previous validation state to prevent infinite loops
+    const prevValidationRef = useRef<{ isValid: boolean; errors: string[] } | null>(null);
 
     useEffect(() => {
-      updateValidationStatus();
+      // Initial validation
+      validateField('media');
     }, []);
+
+    // Update validation when images change - this ensures button enables when images are uploaded
+    useEffect(() => {
+      // Re-validate when image arrays change
+      const hasImages = uploadedImages.length > 0 || existingImageUrls.length > 0;
+      const error = hasImages ? '' : 'يجب رفع صورة واحدة على الأقل';
+      
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev };
+        if (error) {
+          newErrors['media'] = error;
+        } else {
+          delete newErrors['media'];
+        }
+        return newErrors;
+      });
+    }, [uploadedImages.length, existingImageUrls.length]);
+
+    // Separate effect to update validation status when fieldErrors change
+    useEffect(() => {
+      const isValid = Object.keys(fieldErrors).length === 0;
+      const errors = Object.values(fieldErrors).filter((e) => e);
+      
+      // Only update if validation state actually changed to prevent infinite loops
+      const currentValidation = { isValid, errors };
+      const prevValidation = prevValidationRef.current;
+      
+      if (!prevValidation || 
+          prevValidation.isValid !== currentValidation.isValid ||
+          JSON.stringify(prevValidation.errors) !== JSON.stringify(currentValidation.errors)) {
+        prevValidationRef.current = currentValidation;
+        onValidationStatusChanged(currentValidation);
+      }
+    }, [fieldErrors]);
 
     useEffect(() => {
       if (advertisementFormState?.step5) {
@@ -68,6 +106,10 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
           const existingBlobs = imageUrls.filter((url: string) => url.startsWith('blob:'));
           setImageUrls([...existing, ...existingBlobs]);
           setAdvertisementForm((prev) => ({ ...prev, images: savedData.images }));
+          // Validate after state update
+          setTimeout(() => {
+            validateField('media');
+          }, 0);
         }
 
         if (savedData.videos && Array.isArray(savedData.videos)) {
@@ -77,8 +119,6 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
           setVideoUrls([...existing, ...existingBlobs]);
           setAdvertisementForm((prev) => ({ ...prev, videos: savedData.videos }));
         }
-
-        updateValidationStatus();
       }
     };
 
@@ -108,7 +148,7 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
       });
 
       event.target.value = '';
-      updateValidationStatus();
+      // Validation will be triggered automatically by useEffect when uploadedImages.length changes
     };
 
     const onVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,8 +194,7 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
       }
 
       setImageUrls((prev) => prev.filter((_, i) => i !== index));
-      validateField('media');
-      updateValidationStatus();
+      // Validation will be triggered automatically by useEffect when arrays change
     };
 
     const removeVideo = (index: number) => {
@@ -211,6 +250,7 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
         } else {
           delete newErrors[fieldName];
         }
+        // Validation status will be updated by the useEffect that watches fieldErrors
         return newErrors;
       });
     };
@@ -218,10 +258,6 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
     const updateValidationStatus = () => {
       const fieldsToValidate = ['media'];
       fieldsToValidate.forEach((field) => validateField(field));
-
-      const isValid = Object.keys(fieldErrors).length === 0;
-      const errors = Object.values(fieldErrors);
-      onValidationStatusChanged({ isValid, errors });
     };
 
     const uploadFile = async (file: File): Promise<string> => {
@@ -263,11 +299,11 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
       try {
         const allMediaIds: string[] = [];
 
-        // If no new files but have existing media, complete without uploading
+        // If no new files but have existing media (images only is fine), complete without uploading
         if (uploadedImages.length === 0 && uploadedVideos.length === 0 && (existingImageUrls.length > 0 || existingVideoUrls.length > 0)) {
           const finalForm: AdvertisementMedia = {
             images: existingImageUrls,
-            videos: existingVideoUrls,
+            videos: existingVideoUrls || [], // Videos are optional
           };
           onStepCompleted({ advertisementData: finalForm });
           showToast('تم حفظ الوسائط بنجاح', 'success');
@@ -275,7 +311,7 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
           return { advertisementData: finalForm };
         }
 
-        // Upload new images
+        // Upload new images (videos are optional, so we only upload if they exist)
         for (const file of uploadedImages) {
           try {
             const mediaId = await uploadFile(file);
@@ -285,7 +321,7 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
           }
         }
 
-        // Upload new videos
+        // Upload new videos (optional - only if user uploaded videos)
         for (const file of uploadedVideos) {
           try {
             const mediaId = await uploadFile(file);
@@ -295,31 +331,45 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
           }
         }
 
+        // If no files were uploaded but we have images (existing or new), we can still proceed
+        // Videos are completely optional
+        if (allMediaIds.length === 0 && existingImageUrls.length > 0) {
+          const finalForm: AdvertisementMedia = {
+            images: existingImageUrls,
+            videos: existingVideoUrls || [], // Videos are optional
+          };
+          onStepCompleted({ advertisementData: finalForm });
+          showToast('تم حفظ الوسائط بنجاح', 'success');
+          setIsSavingStep(false);
+          return { advertisementData: finalForm };
+        }
+
         // Separate image and video IDs
         const imageIds = allMediaIds.slice(0, uploadedImages.length);
         const videoIds = allMediaIds.slice(uploadedImages.length);
 
-        // Set cover media ID (first image or first video)
+        // Set cover media ID (first image is preferred, or first video if no images)
         const coverMediaId = imageIds.length > 0 ? imageIds[0] : (videoIds.length > 0 ? videoIds[0] : null);
 
-        // Call the uploadAdvertisementMedia API
+        // Call the uploadAdvertisementMedia API (videos are optional - empty array is fine)
         const response = await specialOrderService.uploadAdvertisementMedia({
           Order: {
             Id: advertisementId,
             Step: 5,
-            mediaFileIds: allMediaIds,
+            mediaFileIds: allMediaIds, // Can be empty if only existing images, or contain only image IDs
             coverMediaId: coverMediaId,
           },
         });
 
         if (response.IsSuccess) {
           // Combine existing URLs with new uploaded file URLs
+          // Videos are optional - can be empty array
           const allImageUrls = [...existingImageUrls, ...imageUrls.filter((url) => url.startsWith('blob:'))];
           const allVideoUrls = [...existingVideoUrls, ...videoUrls.filter((url) => url.startsWith('blob:'))];
 
           const finalForm: AdvertisementMedia = {
             images: allImageUrls,
-            videos: allVideoUrls,
+            videos: allVideoUrls || [], // Videos are optional
           };
 
           onStepCompleted({ advertisementData: finalForm });
@@ -350,126 +400,162 @@ const Step5 = forwardRef<Step5Handle, Step5Props>(
       checkIfInputsAreValid,
     }));
 
+    const showVideoUnavailableMessage = () => {
+      showToast('هذه الخدمة غير متاحة حالياً', 'warning');
+    };
+
     return (
       <div className={styles.stepContent}>
-        {isSavingStep && (
-          <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style={{ backgroundColor: 'rgba(255,255,255,0.9)', zIndex: 9999 }}>
-            <div className="text-center">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">جاري الحفظ...</span>
+        <div className={styles.mediaSection}>
+          {isSavingStep && (
+            <div className={styles.globalLoadingOverlay}>
+              <div className={styles.loadingContent}>
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">جاري الحفظ...</span>
+                </div>
+                <p className={styles.loadingText}>جاري حفظ وسائط الإعلان...</p>
               </div>
-              <p className="mt-2">جاري حفظ وسائط الطلب الخاص...</p>
             </div>
-          </div>
-        )}
+          )}
 
-        <h4 className="mb-3">صور وفيديوهات الطلب الخاص</h4>
+          <div className={`${styles.uploadSection} ${isSavingStep ? styles.disabled : ''}`}>
+            <h4 className="mb-3">صور وفيديوهات الإعلان</h4>
 
-        <div className="mb-4">
-          <div className="mb-2">
-            <h6><i className="fa-solid fa-image"></i> أنواع الصور المسموحة:</h6>
-            <span className="text-muted">JPG, JPEG, PNG, GIF, BMP, WebP, TIFF, SVG</span>
-          </div>
-          <div className="mb-2">
-            <h6><i className="fa-solid fa-info-circle"></i> الحد الأقصى:</h6>
-            <span className="text-muted">{MAX_IMAGES} صور، حجم الملف: 50 ميجابايت</span>
-          </div>
-        </div>
-
-        <div className="mb-3">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={onImageUpload}
-            className="d-none"
-            id="single-media-upload"
-            disabled={isSavingStep || uploadedImages.length + existingImageUrls.length >= MAX_IMAGES}
-            multiple
-          />
-          <label htmlFor="single-media-upload" className="btn btn-primary">
-            <i className="fa-solid fa-download me-2"></i>
-            اختر لرفع الصور
-          </label>
-        </div>
-
-        {imageUrls.length > 0 && (
-          <div className="row mb-4">
-            {imageUrls.map((imageUrl, i) => (
-              <div key={i} className="col-md-3 mb-3">
-                <div className="position-relative">
-                  <img
-                    src={imageUrl.startsWith('blob:') ? imageUrl : `${baseUrl}/${imageUrl}`}
-                    alt="Uploaded Media"
-                    className="img-fluid rounded"
-                    style={{ height: '200px', width: '100%', objectFit: 'cover' }}
-                  />
-                  {!imageUrl.startsWith('blob:') && (
-                    <span className="badge bg-primary position-absolute top-0 start-0 m-2">موجود</span>
-                  )}
-                  {imageUrl.startsWith('blob:') && (
-                    <span className="badge bg-success position-absolute top-0 start-0 m-2">جديد</span>
-                  )}
-                  <button
-                    className="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
-                    onClick={() => removeImage(i)}
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
+            {/* Images Section */}
+            <div className={styles.sectionContainer}>
+              {/* Images Hint */}
+              <div className={styles.fileTypesHint}>
+                <div className={styles.hintSection}>
+                  <h6><i className="fa-solid fa-image"></i> أنواع الصور المسموحة:</h6>
+                  <span className={styles.fileTypes}>JPG, JPEG, PNG, GIF, BMP, WebP, TIFF, SVG</span>
+                </div>
+                <div className={styles.hintSection}>
+                  <h6><i className="fa-solid fa-info-circle"></i> الحد الأقصى:</h6>
+                  <span className={styles.fileTypes}>{MAX_IMAGES} صور، حجم الملف: 50 ميجابايت</span>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
 
-        <hr className="my-4" />
-
-        <div className="mb-4">
-          <div className="mb-2">
-            <h6><i className="fa-solid fa-video"></i> أنواع الفيديو المسموحة:</h6>
-            <span className="text-muted">MP4, MOV, WEBM, MKV</span>
-          </div>
-          <div className="mb-2">
-            <h6><i className="fa-solid fa-info-circle"></i> الحد الأقصى:</h6>
-            <span className="text-muted">فيديو واحد، حجم الملف: 50 ميجابايت</span>
-          </div>
-        </div>
-
-        {!hasVideoUploaded() ? (
-          <div className="mb-3">
-            <input
-              type="file"
-              accept="video/*"
-              onChange={onVideoUpload}
-              className="d-none"
-              id="video-upload"
-              disabled={isSavingStep}
-            />
-            <label htmlFor="video-upload" className="btn btn-primary">
-              <i className="fa-solid fa-download me-2"></i>
-              اختر لرفع فيديو
-            </label>
-          </div>
-        ) : (
-          <div className="mb-3">
-            <div className="border rounded p-3 d-flex justify-content-between align-items-center">
-              <div>
-                <i className="fa-solid fa-video me-2"></i>
-                <span>{getVideoFileName()}</span>
-                <span className="badge bg-success ms-2">تم إضافة الفيديو</span>
+              {/* Single Upload Button */}
+              <div className={styles.uploadButtonContainer}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={onImageUpload}
+                  className={styles.fileInput}
+                  id="single-media-upload"
+                  disabled={isSavingStep || uploadedImages.length + existingImageUrls.length >= MAX_IMAGES}
+                  multiple
+                  aria-label="رفع صور الإعلان"
+                />
+                <label htmlFor="single-media-upload" className={styles.videoUploadLabel} aria-label="اختر لرفع الصور">
+                  <i className="fa-solid fa-download"></i>
+                  <span>اختر لرفع الصور</span>
+                </label>
               </div>
-              <button className="btn btn-danger btn-sm" onClick={() => removeVideo(0)}>
-                <i className="fa-solid fa-trash"></i>
-              </button>
+
+              {/* Display uploaded media */}
+              {imageUrls.length > 0 && (
+                <div className={styles.mediaGrid}>
+                  <div className="row">
+                    {imageUrls.map((imageUrl, i) => (
+                      <div key={i} className="col-md-3 mb-3">
+                        <div className={styles.mediaItem}>
+                          <div className={styles.mediaPreview}>
+                            <img
+                              src={imageUrl.startsWith('blob:') ? imageUrl : `${baseUrl}/${imageUrl}`}
+                              alt="Uploaded Media"
+                              className={styles.mediaImg}
+                              loading="lazy"
+                            />
+                            {/* Badge to show if it's existing or new */}
+                            <div className={styles.mediaBadge}>
+                              {!imageUrl.startsWith('blob:') && (
+                                <span className="badge bg-primary">موجود</span>
+                              )}
+                              {imageUrl.startsWith('blob:') && (
+                                <span className="badge bg-success">جديد</span>
+                              )}
+                            </div>
+                            <div className={styles.mediaActions}>
+                              <button className={styles.deleteBtn} onClick={() => removeImage(i)}>
+                                <i className="fa-solid fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <hr className="my-4" />
+
+            {/* Video Section */}
+            <div className={styles.sectionContainer}>
+              {/* Video Hint */}
+              <div className={styles.fileTypesHint}>
+                <div className={styles.hintSection}>
+                  <h6><i className="fa-solid fa-video"></i> أنواع الفيديو المسموحة:</h6>
+                  <span className={styles.fileTypes}>MP4, MOV, WEBM, MKV</span>
+                </div>
+                <div className={styles.hintSection}>
+                  <h6><i className="fa-solid fa-info-circle"></i> الحد الأقصى:</h6>
+                  <span className={styles.fileTypes}>فيديو واحد، حجم الملف: 50 ميجابايت</span>
+                </div>
+              </div>
+
+              {/* Video Upload Area (Disabled with toast) */}
+              <div className={styles.videoSection}>
+                <div className={styles.videoUploadArea}>
+                  <input
+                    type="file"
+                    accept="video/*"
+                    className={styles.fileInput}
+                    id="video-upload"
+                    disabled
+                    aria-label="رفع فيديو الإعلان"
+                  />
+                  <label
+                    htmlFor="video-upload"
+                    className={`${styles.videoUploadLabel} ${styles.notAllowed}`}
+                    onClick={showVideoUnavailableMessage}
+                    aria-label="زر رفع الفيديو"
+                  >
+                    <i className="fa-solid fa-download"></i>
+                    <span>اختر لرفع فيديو</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Video Section */}
+              {hasVideoUploaded() && (
+                <div className={styles.videoSection}>
+                  <div className={styles.videoUploadArea}>
+                    <div className={styles.uploadedVideo}>
+                      <div className={styles.videoInfo}>
+                        <i className="fa-solid fa-video"></i>
+                        <span className={styles.videoName}>{getVideoFileName()}</span>
+                        <span className={styles.videoStatus}>تم إضافة الفيديو</span>
+                      </div>
+                      <button className={styles.removeVideoBtn} onClick={() => removeVideo(0)}>
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        )}
 
-        {fieldErrors['media'] && (
-          <div className="alert alert-warning mt-3">
-            <i className="fa-solid fa-exclamation-triangle me-2"></i>
-            {fieldErrors['media']}
-          </div>
-        )}
+          {fieldErrors['media'] && (
+            <div className="alert alert-warning mt-3">
+              <i className="fa-solid fa-exclamation-triangle"></i>
+              {fieldErrors['media']}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

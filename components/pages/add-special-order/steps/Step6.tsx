@@ -313,17 +313,22 @@ const Step6 = forwardRef<Step6Handle, Step6Props>(
     };
 
     const onFieldFocus = (fieldName: string) => {
-      setFieldInteractionStates((prev) => ({ ...prev, [fieldName]: false }));
+      setFieldInteractionStates((prev) => ({ ...prev, [fieldName]: true }));
     };
 
     const onFieldBlur = (fieldName: string) => {
-      setFieldInteractionStates((prev) => ({ ...prev, [fieldName]: true }));
+      validateField(fieldName);
+      updateValidationStatus();
+    };
+
+    const onFieldChange = (fieldName: string) => {
+      // Validate in real-time as user types
       validateField(fieldName);
       updateValidationStatus();
     };
 
     const shouldShowFieldFeedback = (fieldName: string): boolean => {
-      return fieldInteractionStates[fieldName] === true;
+      return fieldInteractionStates[fieldName] && !!fieldErrors[fieldName];
     };
 
     const getFieldError = (fieldName: string): string => {
@@ -378,15 +383,13 @@ const Step6 = forwardRef<Step6Handle, Step6Props>(
     const onLatitudeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       setLocationForm((prev) => ({ ...prev, latitude: value ? parseFloat(value) : null }));
-      validateField('latitude');
-      updateValidationStatus();
+      onFieldChange('latitude');
     };
 
     const onLongitudeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       setLocationForm((prev) => ({ ...prev, longitude: value ? parseFloat(value) : null }));
-      validateField('longitude');
-      updateValidationStatus();
+      onFieldChange('longitude');
     };
 
     const openAddDistrictModal = () => {
@@ -516,176 +519,193 @@ const Step6 = forwardRef<Step6Handle, Step6Props>(
 
     return (
       <div className={styles.stepContent}>
-        <h3 className="mb-4">موقع الطلب الخاص</h3>
-
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-floating mb-4">
-              <div className="position-relative">
-                <span className="position-absolute top-50 start-0 translate-middle-y ms-3" style={{ zIndex: 10 }}>
-                  <i className="fa-solid fa-arrow-down"></i>
-                </span>
-                <select
-                  className="form-control"
-                  style={{ paddingLeft: '2rem' }}
-                  value={selectedCityId}
-                  onChange={onCityChange}
-                  onFocus={() => onFieldFocus('city')}
-                  onBlur={() => onFieldBlur('city')}
-                >
-                  <option value="">اختر المدينة</option>
-                  {cities.map((city) => (
-                    <option key={city.Id} value={city.Id}>
-                      {city.ArName}
-                    </option>
-                  ))}
-                </select>
+        <div className={styles.locationSection}>
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-floating mb-4">
+                <div className={styles.inputWithAddContainer}>
+                  <div className={styles.selectContainer}>
+                    <div className="div" style={{ position: 'relative' }}>
+                      <span className={styles.downArrow}>
+                        <i className="fa-solid fa-arrow-down"></i>
+                      </span>
+                    </div>
+                    <select
+                      style={{ padding: '16px' }}
+                      className="form-control"
+                      value={selectedCityId}
+                      onChange={onCityChange}
+                      onFocus={() => onFieldFocus('city')}
+                      onBlur={() => onFieldBlur('city')}
+                      aria-label="اختر المدينة"
+                    >
+                      <option value="">اختر المدينة</option>
+                      {cities.map((city) => (
+                        <option key={city.Id} value={city.Id}>
+                          {city.ArName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className={styles.addDistrictContainer} style={{ marginTop: '-10px' }}>
+                    <button
+                      type="button"
+                      className={styles.addDistrictBtn}
+                      onClick={openAddCityModal}
+                      title="إضافة مدينة جديدة"
+                      aria-label="إضافة مدينة جديدة"
+                    >
+                      <i className="fa-solid fa-plus"></i>
+                    </button>
+                    <span className={styles.addDistrictTooltip}>إضافة مدينة جديدة</span>
+                  </div>
+                </div>
+                {shouldShowFieldFeedback('city') && (
+                  <div className="invalid-feedback">{getFieldError('city')}</div>
+                )}
               </div>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2"
-                onClick={openAddCityModal}
-                title="إضافة مدينة جديدة"
-              >
-                <i className="fa-solid fa-plus"></i>
-              </button>
-              {shouldShowFieldFeedback('city') && (
-                <div className="text-danger small mt-1">{getFieldError('city')}</div>
-              )}
             </div>
-          </div>
 
-          <div className="col-md-6">
-            <div className="form-floating mb-4">
-              <div className="position-relative">
-                <span className="position-absolute top-50 start-0 translate-middle-y ms-3" style={{ zIndex: 10 }}>
-                  <i className="fa-solid fa-arrow-down"></i>
-                </span>
-                <select
-                  className="form-control"
-                  style={{ paddingLeft: '2rem' }}
-                  value={locationForm.district}
-                  onChange={onDistrictChange}
-                  onFocus={() => onFieldFocus('district')}
-                  onBlur={() => onFieldBlur('district')}
-                  disabled={!selectedCityId}
-                >
-                  <option value="">اختر الحي</option>
-                  {districts.map((neighborhood) => (
-                    <option key={neighborhood.Id} value={neighborhood.ArName}>
-                      {neighborhood.ArName}
-                    </option>
-                  ))}
-                </select>
+            <div className="col-md-6">
+              <div className="form-floating mb-4">
+                <div className={styles.inputWithAddContainer}>
+                  <div className={styles.selectContainer}>
+                    <div className="div" style={{ position: 'relative' }}>
+                      <span className={styles.downArrow}>
+                        <i className="fa-solid fa-arrow-down"></i>
+                      </span>
+                    </div>
+                    <select
+                      style={{ padding: '16px' }}
+                      className="form-control"
+                      value={locationForm.district}
+                      onChange={onDistrictChange}
+                      onFocus={() => onFieldFocus('district')}
+                      onBlur={() => onFieldBlur('district')}
+                      disabled={!selectedCityId}
+                      aria-label="اختر الحي"
+                    >
+                      <option value="">اختر الحي</option>
+                      {districts.map((neighborhood) => (
+                        <option key={neighborhood.Id} value={neighborhood.ArName}>
+                          {neighborhood.ArName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className={styles.addDistrictContainer} style={{ marginTop: '-10px' }}>
+                    <button
+                      type="button"
+                      className={styles.addDistrictBtn}
+                      onClick={openAddDistrictModal}
+                      disabled={!selectedCityId}
+                      title={!selectedCityId ? 'يرجى اختيار المدينة أولاً' : 'إضافة حي/منطقة جديدة'}
+                      aria-label="إضافة حي/منطقة جديدة"
+                    >
+                      <i className="fa-solid fa-plus"></i>
+                    </button>
+                    <span className={styles.addDistrictTooltip}>إضافة حي جديد</span>
+                  </div>
+                </div>
+                {shouldShowFieldFeedback('district') && (
+                  <div className="invalid-feedback">{getFieldError('district')}</div>
+                )}
               </div>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2"
-                onClick={openAddDistrictModal}
-                disabled={!selectedCityId}
-                title={!selectedCityId ? 'يرجى اختيار المدينة أولاً' : 'إضافة حي/منطقة جديدة'}
-              >
-                <i className="fa-solid fa-plus"></i>
+            </div>
+          </div>
+
+          <div className={styles.mapSection}>
+            <div className={styles.mapContainer}>
+              <div ref={mapRef} id="google-map" className={styles.googleMapContainer}></div>
+            </div>
+
+            <div className={styles.manualLocation}>
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-floating">
+                    <input
+                      type="number"
+                      id="latitude"
+                      className="form-control"
+                      value={locationForm.latitude || ''}
+                      onChange={onLatitudeChange}
+                      onBlur={() => onFieldBlur('latitude')}
+                      onFocus={() => onFieldFocus('latitude')}
+                      step="0.000001"
+                      onKeyPress={validateEnglishNumber}
+                      placeholder="خط الطول"
+                      aria-label="خط الطول"
+                    />
+                    <label htmlFor="latitude">خط الطول</label>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-floating">
+                    <input
+                      type="number"
+                      id="longitude"
+                      className="form-control"
+                      value={locationForm.longitude || ''}
+                      onChange={onLongitudeChange}
+                      onBlur={() => onFieldBlur('longitude')}
+                      onFocus={() => onFieldFocus('longitude')}
+                      step="0.000001"
+                      onKeyPress={validateEnglishNumber}
+                      placeholder="خط العرض"
+                      aria-label="خط العرض"
+                    />
+                    <label htmlFor="longitude">خط العرض</label>
+                  </div>
+                </div>
+              </div>
+              <button className="btn btn-secondary mt-2" onClick={updateMapLocation} aria-label="تحديث الخريطة">
+                <i className="fa-solid fa-map-marker-alt me-1"></i>
+                تحديث الخريطة
               </button>
-              {shouldShowFieldFeedback('district') && (
-                <div className="text-danger small mt-1">{getFieldError('district')}</div>
-              )}
             </div>
           </div>
-        </div>
-
-        <div className="map-section mb-4">
-          <div ref={mapRef} id="google-map" style={{ width: '100%', height: '400px', borderRadius: '12px' }}></div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-6">
-            <div className="form-floating mb-3">
-              <input
-                type="number"
-                id="latitude"
-                className={`form-control ${shouldShowFieldFeedback('latitude') ? 'is-invalid' : ''}`}
-                value={locationForm.latitude || ''}
-                onChange={onLatitudeChange}
-                onBlur={() => onFieldBlur('latitude')}
-                onFocus={() => onFieldFocus('latitude')}
-                onKeyPress={validateEnglishNumber}
-                step="0.000001"
-                placeholder="خط الطول"
-              />
-              <label htmlFor="latitude">خط الطول</label>
-              {shouldShowFieldFeedback('latitude') && (
-                <div className="text-danger small mt-1">{getFieldError('latitude')}</div>
-              )}
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-floating mb-3">
-              <input
-                type="number"
-                id="longitude"
-                className={`form-control ${shouldShowFieldFeedback('longitude') ? 'is-invalid' : ''}`}
-                value={locationForm.longitude || ''}
-                onChange={onLongitudeChange}
-                onBlur={() => onFieldBlur('longitude')}
-                onFocus={() => onFieldFocus('longitude')}
-                onKeyPress={validateEnglishNumber}
-                step="0.000001"
-                placeholder="خط العرض"
-              />
-              <label htmlFor="longitude">خط العرض</label>
-              {shouldShowFieldFeedback('longitude') && (
-                <div className="text-danger small mt-1">{getFieldError('longitude')}</div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="d-flex gap-2 mb-3">
-          <button className="btn btn-secondary" onClick={updateMapLocation}>
-            <i className="fa-solid fa-map-marker-alt me-1"></i>
-            تحديث الخريطة
-          </button>
-          <button className="btn btn-info" onClick={getCurrentLocation}>
-            <i className="fa-solid fa-location-crosshairs me-1"></i>
-            موقعي الحالي
-          </button>
         </div>
 
         {/* Add District Modal */}
         {showAddDistrictModal && (
-          <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">إضافة حي/منطقة جديدة</h5>
-                  <button type="button" className="btn-close" onClick={closeAddDistrictModal}></button>
-                </div>
-                <div className="modal-body">
+          <div className={styles.customModalOverlay} onClick={closeAddDistrictModal}>
+            <div className={styles.customModal} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalHeader}>
+                <h5 className={styles.modalTitle}>إضافة حي/منطقة جديدة</h5>
+                <button type="button" className={styles.modalClose} onClick={closeAddDistrictModal} aria-label="إغلاق">
+                  <i className="fa-solid fa-times"></i>
+                </button>
+              </div>
+              <div className={styles.modalBody}>
+                <form>
                   <div className="mb-3">
-                    <label className="form-label">اسم الحي/المنطقة *</label>
+                    <label htmlFor="newDistrictArName" className="form-label">
+                      اسم الحي/المنطقة <span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
+                      id="newDistrictArName"
                       value={newDistrict.ArName}
                       onChange={(e) => setNewDistrict((prev) => ({ ...prev, ArName: e.target.value }))}
                       placeholder="أدخل اسم الحي أو المنطقة"
                     />
                   </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={closeAddDistrictModal}>
-                    إلغاء
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={addNewDistrict}
-                    disabled={isAddingDistrict || !newDistrict.ArName}
-                  >
-                    {isAddingDistrict ? 'جاري الإضافة...' : 'إضافة'}
-                  </button>
-                </div>
+                </form>
+              </div>
+              <div className={styles.modalFooter}>
+                <button type="button" className="btn btn-secondary" onClick={closeAddDistrictModal}>
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={addNewDistrict}
+                  disabled={isAddingDistrict || !newDistrict.ArName}
+                >
+                  {isAddingDistrict && <span className="spinner-border spinner-border-sm me-1" role="status"></span>}
+                  {isAddingDistrict ? 'جاري الحفظ...' : 'حفظ'}
+                </button>
               </div>
             </div>
           </div>
@@ -693,38 +713,44 @@ const Step6 = forwardRef<Step6Handle, Step6Props>(
 
         {/* Add City Modal */}
         {showAddCityModal && (
-          <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">إضافة مدينة جديدة</h5>
-                  <button type="button" className="btn-close" onClick={closeAddCityModal}></button>
-                </div>
-                <div className="modal-body">
+          <div className={styles.customModalOverlay} onClick={closeAddCityModal}>
+            <div className={styles.customModal} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.modalHeader}>
+                <h5 className={styles.modalTitle}>إضافة مدينة جديدة</h5>
+                <button type="button" className={styles.modalClose} onClick={closeAddCityModal} aria-label="إغلاق">
+                  <i className="fa-solid fa-times"></i>
+                </button>
+              </div>
+              <div className={styles.modalBody}>
+                <form>
                   <div className="mb-3">
-                    <label className="form-label">اسم المدينة *</label>
+                    <label htmlFor="newCityArName" className="form-label">
+                      اسم المدينة <span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
+                      id="newCityArName"
                       value={newCity.ArName}
                       onChange={(e) => setNewCity((prev) => ({ ...prev, ArName: e.target.value }))}
                       placeholder="أدخل اسم المدينة"
                     />
                   </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={closeAddCityModal}>
-                    إلغاء
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={addNewCity}
-                    disabled={isAddingCity || !newCity.ArName}
-                  >
-                    {isAddingCity ? 'جاري الإضافة...' : 'إضافة'}
-                  </button>
-                </div>
+                </form>
+              </div>
+              <div className={styles.modalFooter}>
+                <button type="button" className="btn btn-secondary" onClick={closeAddCityModal}>
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={addNewCity}
+                  disabled={isAddingCity || !newCity.ArName}
+                >
+                  {isAddingCity && <span className="spinner-border spinner-border-sm me-1" role="status"></span>}
+                  {isAddingCity ? 'جاري الحفظ...' : 'حفظ'}
+                </button>
               </div>
             </div>
           </div>
