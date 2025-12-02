@@ -86,69 +86,68 @@
 }
 
 .licenseUploadArea {
-  border: 1px dashed #e2e8f0;
-  border-radius: 20px;
-  padding: 20px;
-  background: #f9fafb;
+  border: 0.2px solid #f5f5f5;
+  border-radius: 12px;
+  padding: 5px 20px;
+  text-align: center;
 }
 
 .uploadPlaceholder {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.formLabel {
-  font-weight: 600;
-  color: #1f2937;
-  font-size: 15px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
 }
 
 .previousLicense {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border-radius: 999px;
-  background: #ecfdf5;
-  color: #047857;
+  color: #4CAF50;
+  text-decoration: underline;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .previousLicense:hover {
-  background: #d1fae5;
-  transform: translateY(-1px);
+  color: #2d7c18;
 }
 
 .licenseAdded {
-  border-radius: 16px;
-  background: #d1fae5;
-  color: #065f46;
-  padding: 14px 18px;
-  border: 1px solid #a7f3d0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #333;
+}
+
+.uploadBtn {
+  background-color: #2d7c18;
+  color: white;
+  padding: 12px 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.uploadBtn:hover {
+  background-color: #246313;
 }
 
 .fileInput {
   display: none;
 }
 
-.uploadBtn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 40px;
-  padding: 12px 30px;
-  background: linear-gradient(135deg, #2d7c18, #1a5c0d);
-  color: #fff;
+.formLabel {
   font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.uploadBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(45, 124, 24, 0.25);
+  color: #1f2937;
+  font-size: 15px;
 }
 
 .invalidFeedback {
@@ -185,6 +184,42 @@
   overflow-y: auto;
   box-shadow: 0 25px 60px rgba(15, 23, 42, 0.2);
 }
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.modalClose:hover {
+  color: #1f2937;
+}
+
+.modalBody {
+  padding: 24px 32px;
+}
+
+
+
 
 .modalHeader {
   padding: 24px;

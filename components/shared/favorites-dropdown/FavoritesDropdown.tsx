@@ -119,6 +119,8 @@ export default function FavoritesDropdown({ isOpen, onClose }: FavoritesDropdown
       <div
         className={`${styles.favoritesDropdown} ${isOpen ? styles.show : ''} d-none d-md-block`}
         onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
+        data-favorites-dropdown="true"
         role="dialog"
         aria-label="قائمة المفضلة"
       >
@@ -191,8 +193,22 @@ export default function FavoritesDropdown({ isOpen, onClose }: FavoritesDropdown
       </div>
 
       {/* Mobile Favorites Modal */}
-      <div className={`${styles.mobileFavoritesModal} d-md-none`} onClick={onClose} role="dialog" aria-label="قائمة المفضلة على الجوال">
-        <div className={styles.mobileModalContent} onClick={(e) => e.stopPropagation()}>
+      <div 
+        className={`${styles.mobileFavoritesModal} d-md-none`} 
+        onClick={(e) => {
+          // Only close if clicking directly on the overlay, not on the content
+          if (e.target === e.currentTarget) {
+            onClose();
+          }
+        }}
+        role="dialog" 
+        aria-label="قائمة المفضلة على الجوال"
+      >
+        <div 
+          className={styles.mobileModalContent} 
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           <div className={styles.mobileModalHeader}>
             <h5>المفضلة</h5>
             <div className={styles.mobileHeaderActions}>

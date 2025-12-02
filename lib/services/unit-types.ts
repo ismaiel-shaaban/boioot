@@ -85,14 +85,20 @@ export const unitTypesService = {
       },
     };
 
-    unitTypesPromise = apiClient.post<UnitTypesData>(`${environment.realestateApiUrl}/UnitTypes/paginated`, payload)
+    const apiUrl = `${environment.realestateApiUrl}/UnitTypes/paginated`;
+    console.log('getUnitTypes: Calling API:', apiUrl);
+    console.log('getUnitTypes: Payload:', payload);
+    
+    unitTypesPromise = apiClient.post<UnitTypesData>(apiUrl, payload)
       .then((response) => {
+        console.log('getUnitTypes: API response received:', response);
         unitTypesCache = response;
         cacheTimestamp = now;
         unitTypesPromise = null; // Clear promise after completion
         return response;
       })
       .catch((error) => {
+        console.error('getUnitTypes: API error:', error);
         unitTypesPromise = null; // Clear promise on error
         throw error;
       });
@@ -129,22 +135,35 @@ export const unitTypesService = {
 
   async getPropertyTypes(): Promise<PropertyType[]> {
     try {
+      console.log('getPropertyTypes: Calling getUnitTypes...');
       const response = await this.getUnitTypes();
-      if (!response || !response.IsSuccess || !response.Data?.Items) {
+      console.log('getPropertyTypes: Response received:', response);
+      
+      if (!response) {
+        console.warn('getPropertyTypes: No response received');
         return [];
       }
 
-      if (response.Data && response.Data.Items) {
-        return response.Data.Items.map((item) => ({
-          value: item.Id,
-          label: item.Name,
-        }));
+      if (!response.IsSuccess) {
+        console.warn('getPropertyTypes: API returned IsSuccess=false', response.Error);
+        return [];
       }
 
-      return [];
+      if (!response.Data || !response.Data.Items) {
+        console.warn('getPropertyTypes: No Data.Items in response', response.Data);
+        return [];
+      }
+
+      const propertyTypes = response.Data.Items.map((item) => ({
+        value: item.Id,
+        label: item.Name,
+      }));
+      
+      console.log('getPropertyTypes: Mapped property types:', propertyTypes);
+      return propertyTypes;
     } catch (error) {
       console.error('Error loading property types:', error);
-      return [];
+      throw error; // Re-throw to let caller handle it
     }
   },
 };

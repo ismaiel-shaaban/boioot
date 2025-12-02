@@ -59,7 +59,7 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
       adDescription: '',
     },
     step2: {
-      ownerType: '0',
+      ownerType: 'فرد',
       idNumber: '',
       birthDate: '',
       contactNumber: '',
@@ -68,10 +68,10 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
       propertyType: 0,
     },
     step4: {
-      area: null,
-      rent: null,
+      area: 0,
+      rent: 0,
       hasCommission: false,
-      commissionAmount: null,
+      commissionAmount: 0,
       rentalDuration: 0,
       paymentType: 0,
     },
@@ -83,17 +83,17 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
       id: '',
       city: '',
       district: '',
-      latitude: null,
-      longitude: null,
+      latitude: 0,
+      longitude: 0,
       step: 6,
     },
     step7: {
-      numberOfRooms: null,
+      numberOfRooms: 2,
       category: 0,
-      numberOfHalls: null,
-      numberOfBathrooms: null,
+      numberOfHalls: 3,
+      numberOfBathrooms: 2,
       propertyAge: '',
-      floor: null,
+      floor: '',
     },
     step8: {
       features: [],
@@ -191,13 +191,13 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
     setAdvertisementFormState({
       step1: {
         propertyLicense: null,
-        licenseId: adData.LicenceId || '',
+        licenseId: adData.TitleDeedNumber || adData.CompanyLicenseNumber || '',
         adTitle: adData.Title || '',
         adDescription: adData.Description || '',
         adId: adData.Id || specialOrderId || undefined,
       },
       step2: {
-        ownerType: adData.OwnerType?.toString() || '0',
+        ownerType: adData.OwnerType?.toString() || '',
         idNumber: adData.TitleDeedNumber || '',
         birthDate: adData.CompanyEstablishedAt
           ? new Date(adData.CompanyEstablishedAt).toISOString().split('T')[0]
@@ -208,10 +208,10 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
         propertyType: adData.UnitType || 0,
       },
       step4: {
-        area: getNumericValue(adData.Area),
-        rent: getNumericValue(adData.RentPrice),
+        area: adData.Area || 0,
+        rent: adData.RentPrice || 0,
         hasCommission: adData.HasCommission || false,
-        commissionAmount: getNumericValue(adData.CommissionAmount),
+        commissionAmount: adData.CommissionAmount || 0,
         rentalDuration: adData.ContractDuration || 0,
         paymentType: adData.PaymentFrequency || 0,
         isUsd: adData.IsUsd || false,
@@ -261,17 +261,17 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
         id: adData.Id || specialOrderId || '',
         city: adData.City || '',
         district: adData.District || '',
-        latitude: getNumericValue(adData.Latitude),
-        longitude: getNumericValue(adData.Longitude),
+        latitude: adData.Latitude || 0,
+        longitude: adData.Longitude || 0,
         step: 6,
       },
       step7: {
-        numberOfRooms: getNumericValue(adData.Rooms),
+        numberOfRooms: adData.Rooms || 2,
         category: adData.Audience || 0,
-        numberOfHalls: getNumericValue(adData.Halls),
-        numberOfBathrooms: getNumericValue(adData.Bathrooms),
-        propertyAge: adData.PropertyAge?.toString() || '0',
-        floor: adData.Floor?.toString() || null,
+        numberOfHalls: adData.Halls || 3,
+        numberOfBathrooms: adData.Bathrooms || 2,
+        propertyAge: adData.PropertyAge?.toString() || '',
+        floor: adData.Floor?.toString() || '',
       },
       step8: {
         features: adData.FeatureNames || [],
@@ -281,7 +281,7 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
 
   const markCompletedSteps = (adData: any) => {
     const status: { [key: number]: boolean } = {};
-    if (adData.Title || adData.Description) {
+    if (adData.Title && adData.Description) {
       status[1] = true;
       setSteps((prev) => prev.map((s) => (s.id === 1 ? { ...s, completed: true } : s)));
     }
@@ -311,11 +311,11 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
         setSteps((prev) => prev.map((s) => (s.id === 5 ? { ...s, completed: true } : s)));
       }
     }
-    if (adData.City || adData.District) {
+    if (adData.City && adData.District) {
       status[6] = true;
       setSteps((prev) => prev.map((s) => (s.id === 6 ? { ...s, completed: true } : s)));
     }
-    if (adData.Rooms || adData.Halls || adData.Bathrooms) {
+    if (adData.Rooms !== undefined && adData.Halls !== undefined) {
       status[7] = true;
       setSteps((prev) => prev.map((s) => (s.id === 7 ? { ...s, completed: true } : s)));
     }
@@ -496,7 +496,7 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
       const currentStepComponent = getCurrentStepComponent();
       if (currentStepComponent && typeof currentStepComponent.saveStep === 'function') {
         await currentStepComponent.saveStep();
-        router.push('/home');
+        router.push('/');
         showToast('تم الانتقال إلى الصفحة الرئيسية', 'success');
       }
     } catch (error) {
@@ -520,7 +520,7 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
         adDescription: '',
       },
       step2: {
-        ownerType: '0',
+        ownerType: 'فرد',
         idNumber: '',
         birthDate: '',
         contactNumber: '',
@@ -529,10 +529,10 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
         propertyType: 0,
       },
       step4: {
-        area: null,
-        rent: null,
+        area: 0,
+        rent: 0,
         hasCommission: false,
-        commissionAmount: null,
+        commissionAmount: 0,
         rentalDuration: 0,
         paymentType: 0,
       },
@@ -544,17 +544,17 @@ export default function AddSpecialOrderClient({ specialOrderId: propId }: AddSpe
         id: '',
         city: '',
         district: '',
-        latitude: null,
-        longitude: null,
+        latitude: 0,
+        longitude: 0,
         step: 6,
       },
       step7: {
-        numberOfRooms: null,
+        numberOfRooms: 2,
         category: 0,
-        numberOfHalls: null,
-        numberOfBathrooms: null,
+        numberOfHalls: 3,
+        numberOfBathrooms: 2,
         propertyAge: '',
-        floor: null,
+        floor: '',
       },
       step8: {
         features: [],

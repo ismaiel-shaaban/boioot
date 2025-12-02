@@ -56,12 +56,18 @@ const Step4 = forwardRef<Step4Handle, Step4Props>(
       }
     }, [advertisementFormState]);
 
-    const populateFormWithSavedData = (savedData: AdvertisementDetails) => {
+    const populateFormWithSavedData = (savedData: any) => {
       if (savedData) {
+        // Map API response fields to form fields
         setAdvertisementForm((prev) => ({
           ...prev,
-          ...savedData,
-          isUsd: savedData.isUsd !== undefined ? savedData.isUsd : false,
+          area: savedData.Area || savedData.area || null,
+          rent: savedData.RentPrice || savedData.rent || null,
+          hasCommission: savedData.HasCommission || savedData.hasCommission || false,
+          commissionAmount: savedData.CommissionAmount || savedData.commissionAmount || null,
+          rentalDuration: savedData.ContractDuration || savedData.rentalDuration || 0,
+          paymentType: savedData.PaymentFrequency || savedData.paymentType || 0,
+          isUsd: savedData.IsUsd !== undefined ? savedData.IsUsd : (savedData.isUsd !== undefined ? savedData.isUsd : false),
         }));
         updateValidationStatus();
       }
@@ -263,7 +269,7 @@ const Step4 = forwardRef<Step4Handle, Step4Props>(
 
       try {
         const response = await specialOrderService.updateUnitDetails({
-          AdUnitUpdate: {
+          Order: {
             Id: advertisementId,
             Step: 4,
             Area: advertisementForm.area,
@@ -271,8 +277,8 @@ const Step4 = forwardRef<Step4Handle, Step4Props>(
             PaymentFrequency: advertisementForm.paymentType,
             RentPrice: advertisementForm.rent,
             HasCommission: advertisementForm.hasCommission,
-            CommissionAmount: advertisementForm.commissionAmount,
-            IsUsd: advertisementForm.isUsd,
+            CommissionAmount: advertisementForm.commissionAmount || null,
+            IsUsd: advertisementForm.isUsd || false,
           },
         });
 

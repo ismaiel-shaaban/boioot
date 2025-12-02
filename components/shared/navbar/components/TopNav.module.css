@@ -58,7 +58,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -66,19 +66,23 @@
 .btnPrimary {
   background-color: #106ab8;
   color: white;
+  border: 1px solid #106ab8;
 }
 
 .btnPrimary:hover {
   background-color: #0d5aa0;
+  border-color: #0d5aa0;
 }
 
 .btnSuccess {
   background-color: #2d7c18;
   color: white;
+  border: 1px solid #2d7c18;
 }
 
 .btnSuccess:hover {
-  background-color: #245a13;
+  background-color: #246313;
+  border-color: #246313;
 }
 
 .btnIcon {
@@ -130,10 +134,17 @@
 
 .profileBtn {
   background-color: #2d7c18;
+  color: white;
+  border: 1px solid #2d7c18;
 }
 
 .profileBtn:hover {
-  background-color: #245a13;
+  background-color: #246313;
+  border-color: #246313;
+}
+
+.profileBtn i {
+  color: white;
 }
 
 .notificationBtn {

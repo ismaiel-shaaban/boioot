@@ -22,7 +22,7 @@ export interface Step2Handle {
 const Step2 = forwardRef<Step2Handle, Step2Props>(
   ({ isSubmitting, advertisementFormState, onStepCompleted, onValidationStatusChanged }, ref) => {
     const [advertisementForm, setAdvertisementForm] = useState<AdvertisementOwnerInfo>({
-      ownerType: '0',
+      ownerType: 'فرد',
       idNumber: '',
       birthDate: '',
       contactNumber: '',
@@ -31,11 +31,7 @@ const Step2 = forwardRef<Step2Handle, Step2Props>(
     const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
     const [fieldInteractionStates, setFieldInteractionStates] = useState<{ [key: string]: boolean }>({});
 
-    const ownerTypes = [
-      { value: '0', label: 'فرد' },
-      { value: '1', label: 'شركة' },
-      { value: '2', label: 'متعدد المالك' },
-    ];
+    const ownerTypes = ['فرد', 'شركة', 'متعدد المالك'];
     const { specialOrderId } = useSpecialOrderState();
 
     useEffect(() => {
@@ -72,6 +68,12 @@ const Step2 = forwardRef<Step2Handle, Step2Props>(
     };
 
     const onFieldBlur = (fieldName: string) => {
+      validateField(fieldName);
+      updateValidationStatus();
+    };
+
+    const onFieldChange = (fieldName: string) => {
+      // Validate in real-time as user types
       validateField(fieldName);
       updateValidationStatus();
     };
@@ -151,11 +153,19 @@ const Step2 = forwardRef<Step2Handle, Step2Props>(
       }
 
       try {
+        // Convert ownerType string to number: 'فرد' = 0, 'شركة' = 1, 'متعدد المالك' = 2
+        const ownerTypeMap: { [key: string]: number } = {
+          'فرد': 0,
+          'شركة': 1,
+          'متعدد المالك': 2,
+        };
+        const ownerTypeNumber = ownerTypeMap[advertisementForm.ownerType] ?? 0;
+
         const response = await specialOrderService.updateOwnerInfo({
-          AdUnitUpdate: {
+          Order: {
             Id: specialOrderId,
             Step: 2,
-            OwnerType: parseInt(advertisementForm.ownerType),
+            OwnerType: ownerTypeNumber,
             TitleDeedNumber: advertisementForm.idNumber,
             CompanyLicenseNumber: advertisementForm.contactNumber,
             CompanyEstablishedAt: advertisementForm.birthDate?.trim() || null,
@@ -197,12 +207,12 @@ const Step2 = forwardRef<Step2Handle, Step2Props>(
           <div className="d-flex gap-2 flex-wrap">
             {ownerTypes.map((type) => (
               <button
-                key={type.value}
+                key={type}
                 type="button"
-                className={`btn ${advertisementForm.ownerType === type.value ? 'btn-success' : 'btn-outline-success'}`}
-                onClick={() => selectOwnerType(type.value)}
+                className={`btn ${advertisementForm.ownerType === type ? 'btn-success' : 'btn-outline-success'}`}
+                onClick={() => selectOwnerType(type)}
               >
-                {type.label}
+                {type}
               </button>
             ))}
           </div>
@@ -217,7 +227,10 @@ const Step2 = forwardRef<Step2Handle, Step2Props>(
             type="text"
             className={`form-control ${shouldShowFieldFeedback('idNumber') ? 'is-invalid' : ''}`}
             value={advertisementForm.idNumber}
-            onChange={(e) => setAdvertisementForm((prev) => ({ ...prev, idNumber: e.target.value }))}
+            onChange={(e) => {
+              setAdvertisementForm((prev) => ({ ...prev, idNumber: e.target.value }));
+              onFieldChange('idNumber');
+            }}
             onFocus={() => onFieldFocus('idNumber')}
             onBlur={() => onFieldBlur('idNumber')}
             placeholder="أدخل رقم الهوية"
@@ -245,7 +258,10 @@ const Step2 = forwardRef<Step2Handle, Step2Props>(
             type="text"
             className={`form-control ${shouldShowFieldFeedback('contactNumber') ? 'is-invalid' : ''}`}
             value={advertisementForm.contactNumber}
-            onChange={(e) => setAdvertisementForm((prev) => ({ ...prev, contactNumber: e.target.value }))}
+            onChange={(e) => {
+              setAdvertisementForm((prev) => ({ ...prev, contactNumber: e.target.value }));
+              onFieldChange('contactNumber');
+            }}
             onFocus={() => onFieldFocus('contactNumber')}
             onBlur={() => onFieldBlur('contactNumber')}
             placeholder="أدخل رقم الصك"

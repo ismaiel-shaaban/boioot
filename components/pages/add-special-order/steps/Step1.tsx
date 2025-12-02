@@ -9,6 +9,7 @@ import { useSpecialOrderState } from '@/lib/contexts/SpecialOrderContext';
 import { showToast } from '@/lib/utils/toast';
 import { environment } from '@/lib/config/environment';
 import styles from '../AddSpecialOrderClient.module.css';
+import licenseStyles from '../../add-advertisement/AddAdvertisementClient.module.css';
 
 interface Step1Props {
   isSubmitting: boolean;
@@ -164,6 +165,12 @@ const Step1 = forwardRef<Step1Ref, Step1Props>(
       updateValidationStatus();
     };
 
+    const onFieldChange = (fieldName: string) => {
+      // Validate in real-time as user types
+      validateField(fieldName);
+      updateValidationStatus();
+    };
+
     const shouldShowFieldFeedback = (fieldName: string): boolean => {
       return fieldInteractionStates[fieldName] && !!fieldErrors[fieldName];
     };
@@ -230,32 +237,35 @@ const Step1 = forwardRef<Step1Ref, Step1Props>(
         if (advertisementForm.adId) {
           // Edit mode - update existing
           response = await specialOrderService.updateAdvertisementBasicInfo({
-            AdUpdate: {
+            Order: {
               Id: advertisementForm.adId,
+              Step: 1,
+              LicenceId: advertisementForm.licenseId || null,
               Title: advertisementForm.adTitle,
               Description: advertisementForm.adDescription,
-              LicenceId: advertisementForm.licenseId || null,
             },
           });
         } else {
           // Create mode - create new
           response = await specialOrderService.createAdvertisementBasicInfo({
-            SpecialOrder: {
+            Order: {
+              UnitType: 0,
+              ContactInfo: '',
+              City: '',
+              District: '',
+              LicenceId: advertisementForm.licenseId || null,
               Title: advertisementForm.adTitle,
               Description: advertisementForm.adDescription,
-              LicenceId: advertisementForm.licenseId || null,
             },
           });
 
           if (response?.IsSuccess && response?.Data) {
-            const data = response.Data as any;
-            if (data?.Id) {
-              setSpecialOrderId(data.Id);
-              if (typeof window !== 'undefined') {
-                localStorage.setItem('currentSpecialOrderId', data.Id);
-              }
-              setAdvertisementForm((prev) => ({ ...prev, adId: data.Id }));
+            const adId = typeof response.Data === 'string' ? response.Data : String(response.Data);
+            setSpecialOrderId(adId);
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('currentSpecialOrderId', adId);
             }
+            setAdvertisementForm((prev) => ({ ...prev, adId }));
           }
         }
 
@@ -296,142 +306,187 @@ const Step1 = forwardRef<Step1Ref, Step1Props>(
       <div className={styles.stepContent}>
         <h3 className="mb-4">بيانات الإعلان</h3>
 
-        <div className="mb-3">
-          <label className="form-label">عنوان الإعلان *</label>
-          <input
-            type="text"
-            className={`form-control ${shouldShowFieldFeedback('adTitle') ? 'is-invalid' : ''}`}
-            value={advertisementForm.adTitle}
-            onChange={(e) => setAdvertisementForm((prev) => ({ ...prev, adTitle: e.target.value }))}
-            onFocus={() => onFieldFocus('adTitle')}
-            onBlur={() => onFieldBlur('adTitle')}
-            placeholder="أدخل عنوان الإعلان"
-          />
-          {shouldShowFieldFeedback('adTitle') && (
-            <div className="text-danger small mt-1">{getFieldError('adTitle')}</div>
-          )}
-        </div>
+        {/* License Section - At top like Angular */}
+        <div className="form-group mb-4">
+          <div className={licenseStyles.licenseUploadArea}>
+            <div className={licenseStyles.uploadPlaceholder}>
+              <label className="form-label">(اختياري) إضافة رخصة العقار</label>
 
-        <div className="mb-3">
-          <label className="form-label">وصف الإعلان *</label>
-          <textarea
-            className={`form-control ${shouldShowFieldFeedback('adDescription') ? 'is-invalid' : ''}`}
-            value={advertisementForm.adDescription}
-            onChange={(e) => setAdvertisementForm((prev) => ({ ...prev, adDescription: e.target.value }))}
-            onFocus={() => onFieldFocus('adDescription')}
-            onBlur={() => onFieldBlur('adDescription')}
-            rows={5}
-            placeholder="أدخل وصف الإعلان"
-          />
-          {shouldShowFieldFeedback('adDescription') && (
-            <div className="text-danger small mt-1">{getFieldError('adDescription')}</div>
-          )}
-        </div>
+              {/* Show different content based on license status */}
+              {!advertisementForm.licenseId ? (
+                <div className={licenseStyles.previousLicense} onClick={openLicenseModal} aria-label="اختر رخصة أضفتها سابقاً">
+                  <i className="fa-solid fa-folder-open me-2"></i>
+                  اختر رخصة أضفتها سابقاً
+                </div>
+              ) : (
+                <div className={licenseStyles.licenseAdded}>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div>
+                      <i className="fa-solid fa-check-circle me-2"></i>
+                      تمت الإضافة
+                    </div>
+                    <button type="button" className="btn btn-sm btn-outline-danger remove-license-btn" onClick={removeLicense} aria-label="إزالة الرخصة">
+                      <i className="fa-solid fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              )}
 
-        <div className="mb-3">
-          <label className="form-label">الرخصة (اختياري)</label>
-          <div className="d-flex gap-2 align-items-center">
-            {selectedLicense ? (
-              <>
-                <span className="text-success">{selectedLicense.Name || 'رخصة محددة'}</span>
-                <button type="button" className="btn btn-sm btn-outline-danger" onClick={removeLicense}>
-                  <i className="fa fa-times"></i>
-                </button>
-              </>
-            ) : (
-              <>
-                <button type="button" className="btn btn-outline-primary" onClick={openLicenseModal}>
-                  <i className="fa fa-list me-2"></i>
-                  اختر رخصة موجودة
-                </button>
-                <input
-                  type="file"
-                  className="d-none"
-                  id="license-upload"
-                  accept="image/*,.pdf"
-                  onChange={onLicenseUpload}
-                />
-                <label htmlFor="license-upload" className="btn btn-outline-success">
-                  <i className="fa fa-upload me-2"></i>
-                  رفع رخصة جديدة
-                </label>
-              </>
+              <input
+                type="file"
+                id="license-upload"
+                className={licenseStyles.fileInput}
+                accept=".pdf,.jpg,.jpeg,.png"
+                onChange={onLicenseUpload}
+                onFocus={() => onFieldFocus('propertyLicense')}
+                onBlur={() => onFieldBlur('propertyLicense')}
+                aria-label="رفع رخصة العقار"
+              />
+              <label htmlFor="license-upload" className={licenseStyles.uploadBtn}>
+                <span>إضافة رخصة</span>
+              </label>
+            </div>
+            {shouldShowFieldFeedback('propertyLicense') && (
+              <div className="invalid-feedback">{getFieldError('propertyLicense')}</div>
             )}
           </div>
         </div>
 
-        {advertisementForm.propertyLicense && (
-          <div className="mb-3">
-            <div className="alert alert-info d-flex justify-content-between align-items-center">
-              <span>
-                <i className="fa fa-file me-2"></i>
-                {advertisementForm.propertyLicense.name}
-              </span>
-              <button type="button" className="btn btn-sm btn-outline-danger" onClick={removeFile}>
-                <i className="fa fa-times"></i>
-              </button>
-            </div>
-          </div>
-        )}
+        <div className="form-floating mb-4">
+          <input
+            type="text"
+            className={`form-control ${shouldShowFieldFeedback('adTitle') ? 'is-invalid' : ''}`}
+            value={advertisementForm.adTitle}
+            onChange={(e) => {
+              setAdvertisementForm((prev) => ({ ...prev, adTitle: e.target.value }));
+              onFieldChange('adTitle');
+            }}
+            onFocus={() => onFieldFocus('adTitle')}
+            onBlur={() => onFieldBlur('adTitle')}
+            placeholder="اسم الإعلان"
+          />
+          <label htmlFor="add-address">اسم الإعلان</label>
+          {shouldShowFieldFeedback('adTitle') && (
+            <div className="error-message">{getFieldError('adTitle')}</div>
+          )}
+        </div>
 
+        <div className="form-floating mb-4">
+          <textarea
+            className={`form-control ${shouldShowFieldFeedback('adDescription') ? 'is-invalid' : ''}`}
+            value={advertisementForm.adDescription}
+            onChange={(e) => {
+              setAdvertisementForm((prev) => ({ ...prev, adDescription: e.target.value }));
+              onFieldChange('adDescription');
+            }}
+            onFocus={() => onFieldFocus('adDescription')}
+            onBlur={() => onFieldBlur('adDescription')}
+            rows={4}
+            placeholder="وصف الإعلان"
+          />
+          <label htmlFor="add-description">وصف الإعلان</label>
+          {shouldShowFieldFeedback('adDescription') && (
+            <div className="error-message">{getFieldError('adDescription')}</div>
+          )}
+        </div>
+
+        {/* License Modal - Matching Angular design */}
         {showLicenseModal && (
-          <div className="modal show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-            <div className="modal-dialog modal-lg">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">اختر الرخصة</h5>
-                  <button type="button" className="btn-close" onClick={closeLicenseModal}></button>
-                </div>
-                <div className="modal-body">
-                  {licenses.length > 0 ? (
-                    <div className="list-group">
-                      {licenses.map((license) => (
-                        <button
-                          key={license.Id}
-                          type="button"
-                          className={`list-group-item list-group-item-action ${
-                            license.Id === advertisementForm.licenseId ? 'active' : ''
-                          }`}
-                          onClick={() => selectLicense(license)}
-                        >
-                          <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h6 className="mb-1">{license.Name || 'رخصة بدون اسم'}</h6>
-                              {license.AttachmentUrl && (
-                                <small className="text-muted">
-                                  <a
-                                    href={`${baseUrl}/${license.AttachmentUrl}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(e) => e.stopPropagation()}
-                                  >
-                                    عرض الرخصة
-                                  </a>
-                                </small>
+          <div className={licenseStyles.modalOverlay} onClick={closeLicenseModal}>
+            <div className={licenseStyles.modalContent} onClick={(e) => e.stopPropagation()}>
+              <div className={licenseStyles.modalHeader}>
+                <h3 className={licenseStyles.modalTitle}>الرخص السابقة</h3>
+                <button type="button" className={licenseStyles.modalClose} onClick={closeLicenseModal}>
+                  <i className="fa-solid fa-times"></i>
+                </button>
+              </div>
+
+              <div className={licenseStyles.modalBody}>
+                {licenses && licenses.length > 0 ? (
+                  <div className="row">
+                    {licenses.map((license) => (
+                      <div key={license.Id} className="col-lg-6 mb-4">
+                        <div className={licenseStyles.licenseItem}>
+                          {/* Checkbox for selection */}
+                          <div className={licenseStyles.licenseCheckboxContainer}>
+                            <input
+                              type="checkbox"
+                              id={`license-${license.Id}`}
+                              checked={advertisementForm.licenseId === license.Id}
+                              onChange={() => selectLicense(license)}
+                              className={licenseStyles.licenseCheckbox}
+                            />
+                            <label htmlFor={`license-${license.Id}`} className={licenseStyles.licenseCheckboxLabel}>
+                              <i className="fa-solid fa-check"></i>
+                            </label>
+                          </div>
+
+                          {license?.AttachmentUrl && (
+                            <div className={licenseStyles.licensePreview}>
+                              {/* Preview Link - Opens in new tab */}
+                              <a
+                                href={license.AttachmentUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={licenseStyles.previewLink}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {license.AttachmentUrl?.toLowerCase().endsWith('.pdf') ? (
+                                  <div className={licenseStyles.pdfPreview}>
+                                    <img
+                                      src="/assets/images/pdf.png"
+                                      alt="License Preview"
+                                      style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                                      loading="lazy"
+                                    />
+                                  </div>
+                                ) : (
+                                  <img
+                                    src={license.AttachmentUrl}
+                                    alt="License Preview"
+                                    style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '6px' }}
+                                    loading="lazy"
+                                  />
+                                )}
+                              </a>
+
+                              {/* File Type Badge */}
+                              {license.AttachmentUrl?.toLowerCase().endsWith('.pdf') && (
+                                <div className={`${licenseStyles.fileType} ${licenseStyles.pdf}`}>PDF</div>
+                              )}
+                              {(license.AttachmentUrl?.toLowerCase().endsWith('.jpg') ||
+                                license.AttachmentUrl?.toLowerCase().endsWith('.jpeg')) && (
+                                <div className={`${licenseStyles.fileType} ${licenseStyles.jpg}`}>JPG</div>
+                              )}
+                              {license.AttachmentUrl?.toLowerCase().endsWith('.png') && (
+                                <div className={`${licenseStyles.fileType} ${licenseStyles.png}`}>PNG</div>
+                              )}
+
+                              {/* Selected Indicator */}
+                              {advertisementForm.licenseId === license.Id && (
+                                <div className={licenseStyles.selectedIndicator}>
+                                  <i className="fa-solid fa-check"></i>
+                                </div>
                               )}
                             </div>
-                            {license.Id === advertisementForm.licenseId && (
-                              <i className="fa fa-check text-success"></i>
-                            )}
-                          </div>
-                        </button>
-                      ))}
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="row">
+                    <div className="col-12">
+                      <div className="alert alert-info text-center" role="alert">
+                        لايوجد الترخيصات
+                      </div>
                     </div>
-                  ) : (
-                    <div className="alert alert-info">لا توجد رخص متاحة</div>
-                  )}
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={closeLicenseModal}>
-                    إلغاء
-                  </button>
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         )}
-
-        {showLicenseModal && <div className="modal-backdrop fade show"></div>}
       </div>
     );
   }
